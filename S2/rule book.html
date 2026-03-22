@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Montserrat:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0a0e14;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .teko {
+            font-family: 'Teko', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .accent-border {
+            border-left: 4px solid #e11d48;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <div class="relative py-12 px-4 flex flex-col items-center justify-center bg-slate-900 border-b border-rose-600/30">
+        <div class="z-10 w-full max-w-4xl text-center">
+            <p class="teko text-lg md:text-xl text-rose-500 font-bold tracking-widest mb-2">Sri Laxmi Narasimha PG &
+                Gajanana PG Presents</p>
+            <h1 class="teko text-6xl md:text-8xl font-bold leading-none mb-2 tracking-tighter italic">
+                TURFERS<br><span class="text-rose-600">PREMIER LEAGUE</span>
+            </h1>
+            <div class="bg-rose-600 text-white py-1 px-6 inline-block teko text-2xl mb-6 skew-x-[-12deg]">SEASON 02
+            </div>
+
+            <div
+                class="flex flex-wrap justify-center gap-4 py-4 border-t border-white/10 teko text-xl bg-black/20 px-4">
+                <span>📅 11th April 2026</span>
+                <span class="hidden md:inline text-white/20">|</span>
+                <span>🕒 3:00 PM Onwards</span>
+                <span class="hidden md:inline text-white/20">|</span>
+                <span>📍 Forma Sports Avenue</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto px-4 py-8">
+
+        <section class="mb-10">
+            <h2 class="teko text-4xl italic font-bold mb-4 flex items-center gap-3">
+                <div class="w-2 h-8 bg-rose-600"></div> General Rules
+            </h2>
+            <div class="glass-card p-6 rounded-lg accent-border">
+                <ul class="space-y-3 text-base text-slate-300">
+                    <li class="flex items-start"><span class="text-rose-500 mr-2">•</span> Max 7 players a side in a
+                        match.</li>
+                    <li class="flex items-start"><span class="text-rose-500 mr-2">•</span> All matches will be of 7
+                        overs (Maximum 1 over per bowler).</li>
+                    <li class="flex items-start"><span class="text-rose-500 mr-2">•</span> Only one new soft tennis ball
+                        will be provided for each match at the beginning.</li>
+                    <li class="flex items-start"><span class="text-rose-500 mr-2">•</span> Captains to register their
+                        team on CricHeros for scoring.</li>
+                    <li class="flex items-start"><span class="text-rose-500 mr-2">•</span> 7 overs must be bowled within
+                        20 mins (Penalty: 5 runs per every 3 min delay).</li>
+                    <li class="flex items-start"><span class="text-rose-500 mr-2">•</span> Sportsmanship is mandatory;
+                        collaborate with organizers for fair play.</li>
+                    <li class="flex items-start"><span class="text-rose-500 mr-2">•</span> Under any circumstances
+                        umpire decision is final and no arguments will be entertained.</li>
+                    <li class="flex items-start"><span class="text-rose-500 mr-2">•</span> Rain policy: Matches continue
+                        unless deemed unsafe.</li>
+                    <li class="flex items-start"><span class="text-rose-500 mr-2">•</span> No last-moment replacements;
+                        play short if a player is unavailable.</li>
+                    <li class="flex items-start"><span class="text-rose-500 mr-2">•</span> Matches will be played as per
+                        the schedule and no changes will be entertained. If any team fails to turn up for the match
+                        within 5 minutes of the scheduled time, the match will be awarded to the other team.</li>
+                    <li class="flex items-start"><span class="text-rose-500 mr-2">•</span> Entry fees are non-refundable
+                        except reserved players (If they did not play any single match)</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <div class="glass-card p-6 rounded-lg border-t-4 border-blue-500">
+                <h3 class="teko text-3xl font-bold mb-3 italic">Batting Rules</h3>
+                <ul class="space-y-3 text-sm text-slate-300">
+                    <li>• Retired batsmen cannot return to bat in that innings.</li>
+                    <li>• Ball touching TOP/SIDE net and caught = <strong>NOT OUT</strong>.</li>
+                    <li>• Ball hitting TOP/SIDE net and hitting boundary = <strong>4 runs</strong>.</li>
+                </ul>
+            </div>
+            <div class="glass-card p-6 rounded-lg border-t-4 border-yellow-500">
+                <h3 class="teko text-3xl font-bold mb-3 italic">Bowling Rules</h3>
+                <ul class="space-y-3 text-sm text-slate-300">
+                    <li>• Declare bowling side/changes or it's a No Ball.</li>
+                    <li>• Speed gun tracking active: Speed limit breach = <strong>No Ball + Free Hit</strong>.</li>
+                    <li>• International guidelines apply. No Byes or Leg Byes.</li>
+                    <li>• Box will be drawn around bowling stumps. Touching any line of the box will be considered as a
+                        no ball.</li>
+                </ul>
+            </div>
+        </div>
+
+        <section
+            class="mb-10 bg-gradient-to-r from-rose-900/50 to-rose-700/50 p-6 rounded-xl border border-rose-500/30">
+            <h2 class="teko text-4xl font-bold mb-4 italic italic">POWEROVER</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center mb-6">
+                <div class="p-3 bg-black/40 rounded">
+                    <p class="text-[10px] uppercase text-rose-400">Timing</p>
+                    <p class="font-bold">First 3 Overs</p>
+                </div>
+                <div class="p-3 bg-black/40 rounded">
+                    <p class="text-[10px] uppercase text-rose-400">Runs</p>
+                    <p class="font-bold text-yellow-400">2X Multiplier</p>
+                </div>
+                <div class="p-3 bg-black/40 rounded">
+                    <p class="text-[10px] uppercase text-rose-400">Wicket</p>
+                    <p class="font-bold text-white">-5 Runs</p>
+                </div>
+            </div>
+            
+            <div class="bg-black/20 p-4 rounded-lg">
+                <ul class="space-y-3 text-sm text-slate-200">
+                    <li class="flex items-start"><span class="text-rose-400 mr-2">•</span> Power over should be used within first 3 overs from batting team. If not used within first 2 overs, 3rd over will be considered as a power over.</li>
+                    <li class="flex items-start"><span class="text-rose-400 mr-2">•</span> Power over can be used only once in an innings.</li>
+                    <li class="flex items-start"><span class="text-rose-400 mr-2">•</span> Power over should be declared before the start of the over.</li>
+                    <li class="flex items-start"><span class="text-rose-400 mr-2">•</span> Every run scored in power over (including extras) will be multiplied by 2.</li>
+                    <li class="flex items-start"><span class="text-rose-400 mr-2">•</span> Every wicket taken in power over will result in -5 runs.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="teko text-3xl italic font-bold mb-3">Fielding</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-slate-400">
+                <div class="bg-white/5 p-3 rounded">Max 3 fielders behind the bowler.</div>
+                <div class="bg-white/5 p-3 rounded">Wicket Keeper is mandatory.</div>
+                <div class="bg-white/5 p-3 rounded">Overthrows are applicable.</div>
+            </div>
+        </section>
+
+        <footer class="text-center text-slate-600 teko text-lg border-t border-white/5 pt-6">
+            TURFERS PREMIER LEAGUE • SEASON 02
+        </footer>
+    </div>
+</body>
+
+</html>
