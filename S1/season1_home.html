@@ -68,6 +68,30 @@
 
 <body class="antialiased">
 
+    <!-- Hamburger Menu -->
+    <button id="menu-btn" class="fixed top-6 right-6 z-50 text-white hover:text-rose-500 transition-colors focus:outline-none bg-black/50 p-2 rounded-full backdrop-blur-md border border-white/10 shadow-[0_0_15px_rgba(225,29,72,0.3)]">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+
+    <!-- Dropdown Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-slate-900/95 z-[60] hidden flex-col items-center justify-center backdrop-blur-xl">
+        <button id="close-btn" class="absolute top-6 right-6 text-white hover:text-rose-500 transition-colors focus:outline-none bg-black/50 p-2 rounded-full border border-white/10">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <nav class="flex flex-col gap-8 text-center teko text-4xl mt-12">
+            <a href="https://debadattagadanayak.github.io/TPL/index.html" class="hover:text-rose-500 transition-colors">TPL Home</a>
+            <a href="https://debadattagadanayak.github.io/TPL/S1/season1_home.html" class="text-rose-500">Season 01 (Current)</a>
+            <a href="https://debadattagadanayak.github.io/TPL/S2/season2_home.html" class="hover:text-rose-500 transition-colors">Season 02</a>
+            <a href="https://debadattagadanayak.github.io/TPL/S2/rulebook.html" class="hover:text-rose-500 transition-colors">Rule Book</a>
+        </nav>
+        <div class="mt-16 h-[1px] w-24 bg-rose-600/50"></div>
+        <p class="mt-6 teko text-xl text-slate-500 tracking-widest italic">#RiseToGreatness</p>
+    </div>
+
     <div class="relative flex flex-col items-center justify-center hero-gradient px-4">
 
         <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-rose-600/20 rounded-full blur-[120px] pulse-bg"></div>
@@ -117,6 +141,23 @@
         </div>
     </div>
 
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+            mobileMenu.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            mobileMenu.classList.remove('flex');
+            document.body.style.overflow = '';
+        });
+    </script>
 </body>
 
 </html>
