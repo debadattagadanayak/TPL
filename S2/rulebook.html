@@ -37,36 +37,65 @@
 
 <body class="antialiased">
 
-    <!-- Hamburger Menu -->
-    <button id="menu-btn"
-        class="fixed top-6 right-6 z-50 text-white hover:text-rose-500 transition-colors focus:outline-none bg-black/50 p-2 rounded-full backdrop-blur-md border border-white/10 shadow-[0_0_15px_rgba(225,29,72,0.3)]">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <!-- Navigation Sidebar -->
+    <div id="side-menu" class="fixed inset-y-0 left-0 w-80 bg-slate-900/98 z-[60] -translate-x-full transition-transform duration-300 ease-in-out backdrop-blur-2xl border-r border-white/10 overflow-y-auto">
+        <div class="p-8">
+            <div class="flex items-center justify-end mb-16">
+                <button id="close-side-btn" class="text-white hover:text-rose-500 transition-all transform hover:rotate-90">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <nav class="flex flex-col gap-6 teko text-3xl">
+                <a href="https://debadattagadanayak.github.io/TPL/index.html" class="flex items-center gap-3 p-4 rounded-xl hover:bg-white/5 transition-colors group">
+                    <span class="group-hover:translate-x-2 transition-transform">TPL Home</span>
+                </a>
+
+                <!-- Season 01 Dropdown -->
+                <div class="flex flex-col">
+                    <button class="dropdown-toggle flex items-center justify-between p-4 rounded-xl hover:bg-white/5 transition-colors w-full text-left group">
+                        <span class="group-hover:translate-x-2 transition-transform font-bold">Season 01</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform duration-300 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="dropdown-content hidden flex-col pl-8 mt-2 gap-4 border-l-2 border-white/5 ml-4">
+                        <a href="https://debadattagadanayak.github.io/TPL/S1/season1_home.html" class="text-slate-400 hover:text-rose-500 text-2xl transition-colors">Home</a>
+                    </div>
+                </div>
+
+                <!-- Season 02 Dropdown -->
+                <div class="flex flex-col border-t border-white/5 pt-6 mt-2">
+                    <button class="dropdown-toggle flex items-center justify-between p-4 rounded-xl hover:bg-white/5 transition-colors w-full text-left group">
+                        <span class="group-hover:translate-x-2 transition-transform font-bold text-rose-500">Season 02</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform duration-300 text-rose-500 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="dropdown-content flex flex-col pl-8 mt-2 gap-4 border-l-2 border-rose-600/30 ml-4">
+                        <a href="https://debadattagadanayak.github.io/TPL/S2/season2_home.html" class="text-slate-400 hover:text-rose-500 text-2xl transition-colors">Home</a>
+                        <a href="https://debadattagadanayak.github.io/TPL/S2/rulebook.html" class="text-rose-500 text-2xl">Rule Book</a>
+                        <a href="https://debadattagadanayak.github.io/TPL/S2/season2_home.html#teams" class="text-slate-400 hover:text-rose-500 text-2xl transition-colors">Teams</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="mt-32 h-[1px] w-full bg-gradient-to-r from-transparent via-rose-600/30 to-transparent"></div>
+            <p class="mt-8 teko text-xl text-slate-500 tracking-widest italic text-center">#RiseToGreatness</p>
+        </div>
+    </div>
+
+    <!-- Backdrop Overlay -->
+    <div id="side-backdrop" class="fixed inset-0 bg-black/60 z-[55] hidden backdrop-blur-sm transition-opacity duration-300"></div>
+
+    <!-- Hamburger Button (Moved to Left) -->
+    <button id="open-side-btn" class="fixed top-6 left-6 z-50 text-white hover:text-rose-500 transition-all focus:outline-none bg-black/50 p-2.5 rounded-full backdrop-blur-md border border-white/10 shadow-[0_0_20px_rgba(225,29,72,0.2)] hover:scale-110 active:scale-95">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
     </button>
-
-    <!-- Dropdown Menu Overlay -->
-    <div id="mobile-menu"
-        class="fixed inset-0 bg-slate-900/95 z-[60] hidden flex-col items-center justify-center backdrop-blur-xl">
-        <button id="close-btn"
-            class="absolute top-6 right-6 text-white hover:text-rose-500 transition-colors focus:outline-none bg-black/50 p-2 rounded-full border border-white/10">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-        </button>
-        <nav class="flex flex-col gap-8 text-center teko text-4xl mt-12">
-            <a href="https://debadattagadanayak.github.io/TPL/index.html"
-                class="hover:text-rose-500 transition-colors">TPL Home</a>
-            <a href="https://debadattagadanayak.github.io/TPL/S1/season1_home.html"
-                class="hover:text-rose-500 transition-colors">Season 01</a>
-            <a href="https://debadattagadanayak.github.io/TPL/S2/season2_home.html"
-                class="hover:text-rose-500 transition-colors">Season 02</a>
-            <a href="https://debadattagadanayak.github.io/TPL/S2/rulebook.html" class="text-rose-500">Rule Book (S2)</a>
-        </nav>
-        <div class="mt-16 h-[1px] w-24 bg-rose-600/50"></div>
-        <p class="mt-6 teko text-xl text-slate-500 tracking-widest italic">#RiseToGreatness</p>
-    </div>
 
     <div class="relative py-12 px-4 flex flex-col items-center justify-center bg-slate-900 border-b border-rose-600/30">
         <div class="z-10 w-full max-w-4xl text-center">
@@ -180,20 +209,39 @@
         </footer>
     </div>
     <script>
-        const menuBtn = document.getElementById('menu-btn');
-        const closeBtn = document.getElementById('close-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
+        const openSideBtn = document.getElementById('open-side-btn');
+        const closeSideBtn = document.getElementById('close-side-btn');
+        const sideMenu = document.getElementById('side-menu');
+        const sideBackdrop = document.getElementById('side-backdrop');
+        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
 
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.remove('hidden');
-            mobileMenu.classList.add('flex');
-            document.body.style.overflow = 'hidden';
-        });
+        // Sidebar Open/Close
+        function toggleSidebar(open) {
+            if (open) {
+                sideMenu.classList.remove('-translate-x-full');
+                sideBackdrop.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            } else {
+                sideMenu.classList.add('-translate-x-full');
+                sideBackdrop.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
 
-        closeBtn.addEventListener('click', () => {
-            mobileMenu.classList.add('hidden');
-            mobileMenu.classList.remove('flex');
-            document.body.style.overflow = '';
+        openSideBtn.addEventListener('click', () => toggleSidebar(true));
+        closeSideBtn.addEventListener('click', () => toggleSidebar(false));
+        sideBackdrop.addEventListener('click', () => toggleSidebar(false));
+
+        // Dropdown Toggle
+        dropdownToggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const content = toggle.nextElementSibling;
+                const icon = toggle.querySelector('svg');
+                
+                content.classList.toggle('hidden');
+                content.classList.toggle('flex');
+                icon.classList.toggle('rotate-180');
+            });
         });
     </script>
 </body>
