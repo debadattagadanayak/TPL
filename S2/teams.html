@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TPL Season 02 | Cover Page</title>
+    <title>TPL Season 02 | Teams</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Montserrat:wght@300;400;700&display=swap"
@@ -17,7 +17,6 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
-            /* Allow vertical scrolling for the new Teams section */
         }
 
         .teko {
@@ -30,38 +29,73 @@
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(15px);
+            transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
         }
 
-        .hero-gradient {
-            background: radial-gradient(circle at 50% 50%, rgba(225, 29, 72, 0.2) 0%, rgba(10, 14, 20, 1) 80%);
-            min-height: 100vh;
+        .glass-card:hover {
+            transform: translateY(-6px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(225, 29, 72, 0.4);
+        }
+
+        .team-logo-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-logo-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(225, 29, 72, 0.08) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .glass-card:hover .team-logo-wrap::after {
+            opacity: 1;
         }
 
         .text-glow {
             text-shadow: 0 0 30px rgba(225, 29, 72, 0.6);
         }
 
-        .skew-label {
+        .hero-header {
+            background: radial-gradient(ellipse at 50% 0%, rgba(225, 29, 72, 0.18) 0%, rgba(10, 14, 20, 1) 70%);
+            border-bottom: 1px solid rgba(225, 29, 72, 0.15);
+        }
+
+        .skew-badge {
             transform: skewX(-12deg);
         }
 
-        /* Animated background pulse */
+        /* Pulse glow blobs */
         .pulse-bg {
             animation: pulse 4s infinite ease-in-out;
         }
 
         @keyframes pulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
 
-            0%,
-            100% {
-                opacity: 0.5;
-                transform: scale(1);
-            }
+        /* Team name underline */
+        .team-name {
+            position: relative;
+        }
 
-            50% {
-                opacity: 0.8;
-                transform: scale(1.05);
-            }
+        .team-name::after {
+            content: '';
+            display: block;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #e11d48, transparent);
+            margin-top: 6px;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover .team-name::after {
+            transform: scaleX(1);
         }
     </style>
 </head>
@@ -106,7 +140,7 @@
                         </svg>
                     </button>
                     <div class="dropdown-content flex flex-col pl-8 mt-2 gap-4 border-l-2 border-rose-600/30 ml-4">
-                        <a href="https://debadattagadanayak.github.io/TPL/S2/season2_home.html" class="text-rose-500 text-2xl">Home</a>
+                        <a href="https://debadattagadanayak.github.io/TPL/S2/season2_home.html" class="text-slate-400 hover:text-rose-500 text-2xl transition-colors">Home</a>
                         <a href="https://debadattagadanayak.github.io/TPL/S2/rulebook.html" class="text-slate-400 hover:text-rose-500 text-2xl transition-colors">Rule Book</a>
                         <a href="https://debadattagadanayak.github.io/TPL/S2/teams.html" class="text-rose-500 text-2xl">Teams</a>
                     </div>
@@ -121,122 +155,117 @@
     <!-- Backdrop Overlay -->
     <div id="side-backdrop" class="fixed inset-0 bg-black/60 z-[55] hidden backdrop-blur-sm transition-opacity duration-300"></div>
 
-    <!-- Hamburger Button (Moved to Left) -->
+    <!-- Hamburger Button -->
     <button id="open-side-btn" class="fixed top-6 left-6 z-50 text-white hover:text-rose-500 transition-all focus:outline-none bg-black/50 p-2.5 rounded-full backdrop-blur-md border border-white/10 shadow-[0_0_20px_rgba(225,29,72,0.2)] hover:scale-110 active:scale-95">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
     </button>
 
-    <div class="relative flex flex-col items-center justify-center hero-gradient px-4">
+    <!-- Page Header -->
+    <div class="hero-header relative py-14 px-4 flex flex-col items-center text-center overflow-hidden">
+        <!-- Decorative blobs -->
+        <div class="absolute top-0 left-1/4 w-72 h-72 bg-rose-600/15 rounded-full blur-[100px] pulse-bg pointer-events-none"></div>
+        <div class="absolute bottom-0 right-1/4 w-72 h-72 bg-blue-600/10 rounded-full blur-[100px] pulse-bg pointer-events-none"></div>
 
-        <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-rose-600/20 rounded-full blur-[120px] pulse-bg"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-blue-600/10 rounded-full blur-[120px] pulse-bg"></div>
-
-        <div class="z-10 w-full max-w-5xl text-center">
-            <p class="teko text-base sm:text-xl md:text-2xl text-rose-500 font-bold tracking-[0.3em] sm:tracking-[0.4em] mb-6 opacity-90">
+        <div class="z-10 w-full max-w-4xl">
+            <p class="teko text-base sm:text-lg md:text-xl text-rose-500 font-bold tracking-widest mb-2 opacity-90">
                 Sri Laxmi Narasimha PG &amp; Gajanana PG Presents
             </p>
-
-            <h1 class="teko text-6xl sm:text-8xl md:text-[10rem] lg:text-[12rem] font-bold leading-[0.8] mb-4 tracking-tighter italic text-glow">
-                TURFERS<br>
-                <span class="text-rose-600">PREMIER LEAGUE</span>
+            <h1 class="teko text-5xl sm:text-7xl md:text-8xl font-bold leading-none tracking-tighter italic text-glow mb-3">
+                TURFERS<br><span class="text-rose-600">PREMIER LEAGUE</span>
             </h1>
-
-            <div class="relative inline-block mb-16">
-                <div
-                    class="bg-rose-600 text-white py-2 px-12 teko text-4xl md:text-6xl skew-label font-bold shadow-[0_10px_40px_rgba(225,29,72,0.4)]">
+            <div class="inline-block mb-6">
+                <div class="bg-rose-600 text-white py-1 px-8 teko text-xl sm:text-2xl md:text-3xl skew-badge font-bold shadow-[0_8px_30px_rgba(225,29,72,0.4)]">
                     SEASON 02
                 </div>
             </div>
 
-            <div class="flex flex-wrap justify-center gap-0 max-w-4xl mx-auto glass-card rounded-xl overflow-hidden border-b-4 border-rose-600 w-full">
-                <div class="flex-1 min-w-[140px] py-6 px-4 border-b md:border-b-0 md:border-r border-white/10">
-                    <p class="teko text-rose-500 text-lg tracking-widest">Date</p>
-                    <p class="teko text-2xl md:text-3xl font-bold uppercase">11th April 2026</p>
-                </div>
-                <div class="flex-1 min-w-[140px] py-6 px-4 border-b md:border-b-0 md:border-r border-white/10 bg-white/5">
-                    <p class="teko text-rose-500 text-lg tracking-widest">Kick Off</p>
-                    <p class="teko text-2xl md:text-3xl font-bold uppercase">3:00 PM Onwards</p>
-                </div>
-                <div class="flex-1 min-w-[140px] py-6 px-4">
-                    <p class="teko text-rose-500 text-lg tracking-widest">Arena</p>
-                    <p class="teko text-2xl md:text-3xl font-bold uppercase">Forma Sports Avenue</p>
-                </div>
+            <div class="flex flex-wrap justify-center gap-4 py-3 border-t border-white/10 teko text-lg sm:text-xl bg-black/20 px-4 rounded-lg mt-2">
+                <span>📅 11th April 2026</span>
+                <span class="hidden sm:inline text-white/20">|</span>
+                <span>🕒 3:00 PM Onwards</span>
+                <span class="hidden sm:inline text-white/20">|</span>
+                <span>📍 Forma Sports Avenue</span>
             </div>
-
-            <p class="mt-12 text-slate-400 uppercase tracking-[0.5em] text-sm font-light">
-                Chasing Glory Under The Lights
-            </p>
         </div>
+    </div>
 
-        <div id="teams" class="mt-20 w-full max-w-6xl mx-auto px-4 pb-24">
-            <h2 class="teko text-5xl md:text-7xl font-bold mb-12 text-center text-glow text-rose-600">
+    <!-- Teams Section -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 pb-20">
+
+        <div class="text-center mb-12">
+            <h2 class="teko text-5xl sm:text-6xl md:text-7xl font-bold text-glow text-rose-600 leading-none">
                 Participating Teams
             </h2>
+            <p class="text-slate-400 text-sm mt-3 tracking-widest uppercase font-light">Season 02 · 5 Teams · 11th April 2026</p>
+        </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                <!-- Team Card: Gladiator Kings -->
-                <div
-                    class="glass-card rounded-2xl p-6 flex flex-col items-center group hover:border-rose-500/50 transition-all">
-                    <div class="aspect-square w-full flex items-center justify-center mb-4 p-2">
-                        <img src="./Assets/TeamLogo/gladiatorkings.png" alt="Gladiator Kings"
-                            class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500">
-                    </div>
-                    <p class="teko text-xl md:text-2xl font-bold text-center border-t border-rose-600/30 pt-3 w-full">
-                        Gladiator Kings</p>
-                </div>
+        <!-- Team Cards Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
 
-                <!-- Team Card: Gully Dhurandhar -->
-                <div
-                    class="glass-card rounded-2xl p-6 flex flex-col items-center group hover:border-rose-500/50 transition-all">
-                    <div class="aspect-square w-full flex items-center justify-center mb-4 p-2">
-                        <img src="./Assets/TeamLogo/gullydhurandhar.png" alt="Gully Dhurandhar"
-                            class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500">
-                    </div>
-                    <p class="teko text-xl md:text-2xl font-bold text-center border-t border-rose-600/30 pt-3 w-full">
-                        Gully Dhurandhar</p>
+            <!-- Team Card: Gladiator Kings -->
+            <div class="glass-card rounded-2xl p-4 sm:p-6 flex flex-col items-center group cursor-default">
+                <div class="team-logo-wrap aspect-square w-full flex items-center justify-center mb-4 p-2 rounded-xl">
+                    <img src="./Assets/TeamLogo/gladiatorkings.png" alt="Gladiator Kings"
+                        class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500">
                 </div>
-
-                <!-- Team Card: Royal Warriors -->
-                <div
-                    class="glass-card rounded-2xl p-6 flex flex-col items-center group hover:border-rose-500/50 transition-all">
-                    <div class="aspect-square w-full flex items-center justify-center mb-4 p-2">
-                        <img src="./Assets/TeamLogo/royalwarriors.png" alt="Royal Warriors"
-                            class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500">
-                    </div>
-                    <p class="teko text-xl md:text-2xl font-bold text-center border-t border-rose-600/30 pt-3 w-full">
-                        Royal Warriors</p>
-                </div>
-
-                <!-- Team Card: Spartans -->
-                <div
-                    class="glass-card rounded-2xl p-6 flex flex-col items-center group hover:border-rose-500/50 transition-all">
-                    <div class="aspect-square w-full flex items-center justify-center mb-4 p-2">
-                        <img src="./Assets/TeamLogo/spartans.png" alt="Spartans"
-                            class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500">
-                    </div>
-                    <p class="teko text-xl md:text-2xl font-bold text-center border-t border-rose-600/30 pt-3 w-full">
-                        Spartans</p>
-                </div>
-
-                <!-- Team Card: Titans -->
-                <div
-                    class="glass-card rounded-2xl p-6 flex flex-col items-center group hover:border-rose-500/50 transition-all">
-                    <div class="aspect-square w-full flex items-center justify-center mb-4 p-2">
-                        <img src="./Assets/TeamLogo/titans.png" alt="Titans"
-                            class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500">
-                    </div>
-                    <p class="teko text-xl md:text-2xl font-bold text-center border-t border-rose-600/30 pt-3 w-full">
-                        Titans</p>
-                </div>
+                <p class="team-name teko text-lg sm:text-xl md:text-2xl font-bold text-center pt-3 w-full">
+                    Gladiator Kings
+                </p>
             </div>
-        </div>
 
-        <div class="w-full text-center py-12 border-t border-white/5">
-            <div class="h-[1px] w-24 bg-rose-600/50 mx-auto mb-4"></div>
-            <p class="teko text-xl text-slate-600 tracking-widest italic">#TPL2026 #RiseToGreatness</p>
+            <!-- Team Card: Gully Dhurandhar -->
+            <div class="glass-card rounded-2xl p-4 sm:p-6 flex flex-col items-center group cursor-default">
+                <div class="team-logo-wrap aspect-square w-full flex items-center justify-center mb-4 p-2 rounded-xl">
+                    <img src="./Assets/TeamLogo/gullydhurandhar.png" alt="Gully Dhurandhar"
+                        class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <p class="team-name teko text-lg sm:text-xl md:text-2xl font-bold text-center pt-3 w-full">
+                    Gully Dhurandhar
+                </p>
+            </div>
+
+            <!-- Team Card: Royal Warriors -->
+            <div class="glass-card rounded-2xl p-4 sm:p-6 flex flex-col items-center group cursor-default">
+                <div class="team-logo-wrap aspect-square w-full flex items-center justify-center mb-4 p-2 rounded-xl">
+                    <img src="./Assets/TeamLogo/royalwarriors.png" alt="Royal Warriors"
+                        class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <p class="team-name teko text-lg sm:text-xl md:text-2xl font-bold text-center pt-3 w-full">
+                    Royal Warriors
+                </p>
+            </div>
+
+            <!-- Team Card: Spartans -->
+            <div class="glass-card rounded-2xl p-4 sm:p-6 flex flex-col items-center group cursor-default">
+                <div class="team-logo-wrap aspect-square w-full flex items-center justify-center mb-4 p-2 rounded-xl">
+                    <img src="./Assets/TeamLogo/spartans.png" alt="Spartans"
+                        class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <p class="team-name teko text-lg sm:text-xl md:text-2xl font-bold text-center pt-3 w-full">
+                    Spartans
+                </p>
+            </div>
+
+            <!-- Team Card: Titans -->
+            <div class="glass-card rounded-2xl p-4 sm:p-6 flex flex-col items-center group cursor-default">
+                <div class="team-logo-wrap aspect-square w-full flex items-center justify-center mb-4 p-2 rounded-xl">
+                    <img src="./Assets/TeamLogo/titans.png" alt="Titans"
+                        class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <p class="team-name teko text-lg sm:text-xl md:text-2xl font-bold text-center pt-3 w-full">
+                    Titans
+                </p>
+            </div>
+
         </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="w-full text-center py-10 border-t border-white/5">
+        <div class="h-[1px] w-24 bg-rose-600/50 mx-auto mb-4"></div>
+        <p class="teko text-lg sm:text-xl text-slate-600 tracking-widest italic">#TPL2026 #RiseToGreatness</p>
     </div>
 
     <script>
@@ -246,7 +275,6 @@
         const sideBackdrop = document.getElementById('side-backdrop');
         const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
 
-        // Sidebar Open/Close
         function toggleSidebar(open) {
             if (open) {
                 sideMenu.classList.remove('-translate-x-full');
