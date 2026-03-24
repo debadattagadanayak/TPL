@@ -34,6 +34,24 @@
         .accent-border {
             border-left: 4px solid #e11d48;
         }
+
+        .hero-header {
+            background: radial-gradient(ellipse at 50% 0%, rgba(225, 29, 72, 0.18) 0%, rgba(10, 14, 20, 1) 70%);
+            border-bottom: 1px solid rgba(225, 29, 72, 0.15);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 30px rgba(225, 29, 72, 0.6);
+        }
+
+        .pulse-bg {
+            animation: pulse 4s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
     </style>
 </head>
 
@@ -99,22 +117,26 @@
         </svg>
     </button>
 
-    <div class="relative py-12 px-4 flex flex-col items-center justify-center bg-slate-900 border-b border-rose-600/30">
+    <div class="hero-header relative py-12 px-4 flex flex-col items-center justify-center text-center overflow-hidden">
+        <!-- Decorative blobs -->
+        <div class="absolute top-0 left-1/4 w-64 h-64 bg-rose-600/15 rounded-full blur-[100px] pulse-bg pointer-events-none"></div>
+        <div class="absolute bottom-0 right-1/4 w-64 h-64 bg-blue-600/10 rounded-full blur-[100px] pulse-bg pointer-events-none"></div>
+
         <div class="z-10 w-full max-w-4xl text-center">
-            <p class="teko text-lg md:text-xl text-rose-500 font-bold tracking-widest mb-2">Sri Laxmi Narasimha PG &
+            <p class="teko text-base sm:text-lg md:text-xl text-rose-500 font-bold tracking-widest mb-2">Sri Laxmi Narasimha PG &amp;
                 Gajanana PG Presents</p>
-            <h1 class="teko text-5xl sm:text-6xl md:text-8xl font-bold leading-none mb-2 tracking-tighter italic">
+            <h1 class="teko text-5xl sm:text-6xl md:text-8xl font-bold leading-none mb-2 tracking-tighter italic text-glow">
                 TURFERS<br><span class="text-rose-600">PREMIER LEAGUE</span>
             </h1>
-            <div class="bg-rose-600 text-white py-1 px-6 inline-block teko text-2xl mb-6 skew-x-[-12deg]">SEASON 02
+            <div class="bg-rose-600 text-white py-1 px-6 inline-block teko text-xl sm:text-2xl mb-6 skew-x-[-12deg]">
+                SEASON 02
             </div>
 
-            <div
-                class="flex flex-wrap justify-center gap-4 py-4 border-t border-white/10 teko text-xl bg-black/20 px-4">
+            <div class="flex flex-wrap justify-center gap-4 py-3 border-t border-white/10 teko text-lg sm:text-xl bg-black/20 px-4 rounded-lg">
                 <span>📅 11th April 2026</span>
-                <span class="hidden md:inline text-white/20">|</span>
+                <span class="hidden sm:inline text-white/20">|</span>
                 <span>🕒 3:00 PM Onwards</span>
-                <span class="hidden md:inline text-white/20">|</span>
+                <span class="hidden sm:inline text-white/20">|</span>
                 <span>📍 Forma Sports Avenue</span>
             </div>
         </div>

@@ -25,35 +25,120 @@
             letter-spacing: 1px;
         }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+        /* ── Flip Card ── */
+        .flip-wrapper {
+            perspective: 900px;
+            cursor: pointer;
         }
 
-        .glass-card:hover {
-            transform: translateY(-6px);
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(225, 29, 72, 0.4);
-        }
-
-        .team-logo-wrap {
+        .flip-inner {
             position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
+        }
+
+        .flip-wrapper.flipped .flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-front,
+        .flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
         }
 
-        .team-logo-wrap::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, rgba(225, 29, 72, 0.08) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
+        .flip-front {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 1rem;
         }
 
-        .glass-card:hover .team-logo-wrap::after {
-            opacity: 1;
+        .flip-back {
+            background: linear-gradient(160deg, rgba(30, 10, 15, 0.98) 0%, rgba(15, 5, 8, 0.98) 100%);
+            border: 1px solid rgba(225, 29, 72, 0.35);
+            transform: rotateY(180deg);
+            padding: 0.75rem;
+        }
+
+        .flip-back .captain-photo {
+            width: 75%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid #e11d48;
+            box-shadow: 0 0 20px rgba(225, 29, 72, 0.45);
+            margin-bottom: 0.6rem;
+        }
+
+        .flip-back .captain-label {
+            font-size: 0.6rem;
+            letter-spacing: 0.15em;
+            color: #e11d48;
+            text-transform: uppercase;
+            margin-bottom: 0.15rem;
+        }
+
+        .flip-back .captain-name {
+            font-family: 'Teko', sans-serif;
+            font-size: clamp(1rem, 3.5vw, 1.4rem);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #ffffff;
+            text-align: center;
+            line-height: 1.1;
+        }
+
+        .flip-back .tap-hint {
+            font-size: 0.55rem;
+            color: rgba(255, 255, 255, 0.3);
+            margin-top: 0.5rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .flip-front .team-logo-img {
+            width: 80%;
+            aspect-ratio: 1/1;
+            object-fit: contain;
+            transition: transform 0.4s ease;
+        }
+
+        .flip-wrapper:not(.flipped):hover .team-logo-img {
+            transform: scale(1.08);
+        }
+
+        .flip-front .team-name-label {
+            font-family: 'Teko', sans-serif;
+            font-size: clamp(0.85rem, 3vw, 1.25rem);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            text-align: center;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            width: 100%;
+            padding-top: 0.6rem;
+            border-top: 1px solid rgba(225, 29, 72, 0.25);
+            margin-top: 0.5rem;
+        }
+
+        .flip-hint {
+            font-size: 0.55rem;
+            color: rgba(255, 255, 255, 0.25);
+            margin-top: 0.3rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
         }
 
         .text-glow {
@@ -69,33 +154,22 @@
             transform: skewX(-12deg);
         }
 
-        /* Pulse glow blobs */
         .pulse-bg {
             animation: pulse 4s infinite ease-in-out;
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 0.4; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.05); }
-        }
 
-        /* Team name underline */
-        .team-name {
-            position: relative;
-        }
+            0%,
+            100% {
+                opacity: 0.4;
+                transform: scale(1);
+            }
 
-        .team-name::after {
-            content: '';
-            display: block;
-            height: 2px;
-            background: linear-gradient(to right, transparent, #e11d48, transparent);
-            margin-top: 6px;
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-
-        .glass-card:hover .team-name::after {
-            transform: scaleX(1);
+            50% {
+                opacity: 0.7;
+                transform: scale(1.05);
+            }
         }
     </style>
 </head>
@@ -103,46 +177,62 @@
 <body class="antialiased">
 
     <!-- Navigation Sidebar -->
-    <div id="side-menu" class="fixed inset-y-0 left-0 w-80 bg-slate-900/98 z-[60] -translate-x-full transition-transform duration-300 ease-in-out backdrop-blur-2xl border-r border-white/10 overflow-y-auto">
+    <div id="side-menu"
+        class="fixed inset-y-0 left-0 w-80 bg-slate-900/98 z-[60] -translate-x-full transition-transform duration-300 ease-in-out backdrop-blur-2xl border-r border-white/10 overflow-y-auto">
         <div class="p-8">
             <div class="flex items-center justify-end mb-16">
-                <button id="close-side-btn" class="text-white hover:text-rose-500 transition-all transform hover:rotate-90">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                <button id="close-side-btn"
+                    class="text-white hover:text-rose-500 transition-all transform hover:rotate-90">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
 
             <nav class="flex flex-col gap-6 teko text-3xl">
-                <a href="https://debadattagadanayak.github.io/TPL/index.html" class="flex items-center gap-3 p-4 rounded-xl hover:bg-white/5 transition-colors group">
+                <a href="https://debadattagadanayak.github.io/TPL/index.html"
+                    class="flex items-center gap-3 p-4 rounded-xl hover:bg-white/5 transition-colors group">
                     <span class="group-hover:translate-x-2 transition-transform">TPL Home</span>
                 </a>
 
                 <!-- Season 01 Dropdown -->
                 <div class="flex flex-col">
-                    <button class="dropdown-toggle flex items-center justify-between p-4 rounded-xl hover:bg-white/5 transition-colors w-full text-left group">
+                    <button
+                        class="dropdown-toggle flex items-center justify-between p-4 rounded-xl hover:bg-white/5 transition-colors w-full text-left group">
                         <span class="group-hover:translate-x-2 transition-transform font-bold">Season 01</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform duration-300 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6 transition-transform duration-300 opacity-50" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                     <div class="dropdown-content hidden flex-col pl-8 mt-2 gap-4 border-l-2 border-white/5 ml-4">
-                        <a href="https://debadattagadanayak.github.io/TPL/S1/season1_home.html" class="text-slate-400 hover:text-rose-500 text-2xl transition-colors">Home</a>
+                        <a href="https://debadattagadanayak.github.io/TPL/S1/season1_home.html"
+                            class="text-slate-400 hover:text-rose-500 text-2xl transition-colors">Home</a>
                     </div>
                 </div>
 
                 <!-- Season 02 Dropdown -->
                 <div class="flex flex-col border-t border-white/5 pt-6 mt-2">
-                    <button class="dropdown-toggle flex items-center justify-between p-4 rounded-xl hover:bg-white/5 transition-colors w-full text-left group">
-                        <span class="group-hover:translate-x-2 transition-transform font-bold text-rose-500">Season 02</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform duration-300 text-rose-500 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <button
+                        class="dropdown-toggle flex items-center justify-between p-4 rounded-xl hover:bg-white/5 transition-colors w-full text-left group">
+                        <span class="group-hover:translate-x-2 transition-transform font-bold text-rose-500">Season
+                            02</span>
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6 transition-transform duration-300 text-rose-500 rotate-180" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                     <div class="dropdown-content flex flex-col pl-8 mt-2 gap-4 border-l-2 border-rose-600/30 ml-4">
-                        <a href="https://debadattagadanayak.github.io/TPL/S2/season2_home.html" class="text-slate-400 hover:text-rose-500 text-2xl transition-colors">Home</a>
-                        <a href="https://debadattagadanayak.github.io/TPL/S2/rulebook.html" class="text-slate-400 hover:text-rose-500 text-2xl transition-colors">Rule Book</a>
-                        <a href="https://debadattagadanayak.github.io/TPL/S2/teams.html" class="text-rose-500 text-2xl">Teams</a>
+                        <a href="https://debadattagadanayak.github.io/TPL/S2/season2_home.html"
+                            class="text-slate-400 hover:text-rose-500 text-2xl transition-colors">Home</a>
+                        <a href="https://debadattagadanayak.github.io/TPL/S2/rulebook.html"
+                            class="text-slate-400 hover:text-rose-500 text-2xl transition-colors">Rule Book</a>
+                        <a href="https://debadattagadanayak.github.io/TPL/S2/teams.html"
+                            class="text-rose-500 text-2xl">Teams</a>
                     </div>
                 </div>
             </nav>
@@ -153,10 +243,12 @@
     </div>
 
     <!-- Backdrop Overlay -->
-    <div id="side-backdrop" class="fixed inset-0 bg-black/60 z-[55] hidden backdrop-blur-sm transition-opacity duration-300"></div>
+    <div id="side-backdrop"
+        class="fixed inset-0 bg-black/60 z-[55] hidden backdrop-blur-sm transition-opacity duration-300"></div>
 
     <!-- Hamburger Button -->
-    <button id="open-side-btn" class="fixed top-6 left-6 z-50 text-white hover:text-rose-500 transition-all focus:outline-none bg-black/50 p-2.5 rounded-full backdrop-blur-md border border-white/10 shadow-[0_0_20px_rgba(225,29,72,0.2)] hover:scale-110 active:scale-95">
+    <button id="open-side-btn"
+        class="fixed top-6 left-6 z-50 text-white hover:text-rose-500 transition-all focus:outline-none bg-black/50 p-2.5 rounded-full backdrop-blur-md border border-white/10 shadow-[0_0_20px_rgba(225,29,72,0.2)] hover:scale-110 active:scale-95">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
@@ -165,28 +257,26 @@
     <!-- Page Header -->
     <div class="hero-header relative py-14 px-4 flex flex-col items-center text-center overflow-hidden">
         <!-- Decorative blobs -->
-        <div class="absolute top-0 left-1/4 w-72 h-72 bg-rose-600/15 rounded-full blur-[100px] pulse-bg pointer-events-none"></div>
-        <div class="absolute bottom-0 right-1/4 w-72 h-72 bg-blue-600/10 rounded-full blur-[100px] pulse-bg pointer-events-none"></div>
+        <div
+            class="absolute top-0 left-1/4 w-72 h-72 bg-rose-600/15 rounded-full blur-[100px] pulse-bg pointer-events-none">
+        </div>
+        <div
+            class="absolute bottom-0 right-1/4 w-72 h-72 bg-blue-600/10 rounded-full blur-[100px] pulse-bg pointer-events-none">
+        </div>
 
         <div class="z-10 w-full max-w-4xl">
             <p class="teko text-base sm:text-lg md:text-xl text-rose-500 font-bold tracking-widest mb-2 opacity-90">
                 Sri Laxmi Narasimha PG &amp; Gajanana PG Presents
             </p>
-            <h1 class="teko text-5xl sm:text-7xl md:text-8xl font-bold leading-none tracking-tighter italic text-glow mb-3">
+            <h1
+                class="teko text-5xl sm:text-7xl md:text-8xl font-bold leading-none tracking-tighter italic text-glow mb-3">
                 TURFERS<br><span class="text-rose-600">PREMIER LEAGUE</span>
             </h1>
             <div class="inline-block mb-6">
-                <div class="bg-rose-600 text-white py-1 px-8 teko text-xl sm:text-2xl md:text-3xl skew-badge font-bold shadow-[0_8px_30px_rgba(225,29,72,0.4)]">
+                <div
+                    class="bg-rose-600 text-white py-1 px-8 teko text-xl sm:text-2xl md:text-3xl skew-badge font-bold shadow-[0_8px_30px_rgba(225,29,72,0.4)]">
                     SEASON 02
                 </div>
-            </div>
-
-            <div class="flex flex-wrap justify-center gap-4 py-3 border-t border-white/10 teko text-lg sm:text-xl bg-black/20 px-4 rounded-lg mt-2">
-                <span>📅 11th April 2026</span>
-                <span class="hidden sm:inline text-white/20">|</span>
-                <span>🕒 3:00 PM Onwards</span>
-                <span class="hidden sm:inline text-white/20">|</span>
-                <span>📍 Forma Sports Avenue</span>
             </div>
         </div>
     </div>
@@ -198,65 +288,97 @@
             <h2 class="teko text-5xl sm:text-6xl md:text-7xl font-bold text-glow text-rose-600 leading-none">
                 Participating Teams
             </h2>
-            <p class="text-slate-400 text-sm mt-3 tracking-widest uppercase font-light">Season 02 · 5 Teams · 11th April 2026</p>
+            <p class="text-slate-400 text-sm mt-3 tracking-widest uppercase font-light">Season 02 · 5 Teams · 11th April
+                2026</p>
         </div>
 
         <!-- Team Cards Grid -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6" style="grid-auto-rows: 1fr;">
 
             <!-- Team Card: Gladiator Kings -->
-            <div class="glass-card rounded-2xl p-4 sm:p-6 flex flex-col items-center group cursor-default">
-                <div class="team-logo-wrap aspect-square w-full flex items-center justify-center mb-4 p-2 rounded-xl">
-                    <img src="./Assets/TeamLogo/gladiatorkings.png" alt="Gladiator Kings"
-                        class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500">
+            <div class="flip-wrapper" style="aspect-ratio:3/4;" onclick="this.classList.toggle('flipped')">
+                <div class="flip-inner">
+                    <div class="flip-front">
+                        <img src="./Assets/TeamLogo/gladiatorkings.png" alt="Gladiator Kings" class="team-logo-img">
+                        <p class="team-name-label">Gladiator Kings</p>
+                        <span class="flip-hint">Tap to meet captain</span>
+                    </div>
+                    <div class="flip-back">
+                        <img src="./Assets/Captains/avinabh_gladiatorkings.png" alt="Avinabh" class="captain-photo">
+                        <p class="captain-label">Captain</p>
+                        <p class="captain-name">Avinabh</p>
+                        <span class="tap-hint">Tap to go back</span>
+                    </div>
                 </div>
-                <p class="team-name teko text-lg sm:text-xl md:text-2xl font-bold text-center pt-3 w-full">
-                    Gladiator Kings
-                </p>
             </div>
 
             <!-- Team Card: Gully Dhurandhar -->
-            <div class="glass-card rounded-2xl p-4 sm:p-6 flex flex-col items-center group cursor-default">
-                <div class="team-logo-wrap aspect-square w-full flex items-center justify-center mb-4 p-2 rounded-xl">
-                    <img src="./Assets/TeamLogo/gullydhurandhar.png" alt="Gully Dhurandhar"
-                        class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500">
+            <div class="flip-wrapper" style="aspect-ratio:3/4;" onclick="this.classList.toggle('flipped')">
+                <div class="flip-inner">
+                    <div class="flip-front">
+                        <img src="./Assets/TeamLogo/gullydhurandhar.png" alt="Gully Dhurandhar" class="team-logo-img">
+                        <p class="team-name-label">Gully Dhurandhar</p>
+                        <span class="flip-hint">Tap to meet captain</span>
+                    </div>
+                    <div class="flip-back">
+                        <img src="./Assets/Captains/vishwarat_gullydhurandhar.jpg" alt="Vishwarat"
+                            class="captain-photo">
+                        <p class="captain-label">Captain</p>
+                        <p class="captain-name">Vishwarat</p>
+                        <span class="tap-hint">Tap to go back</span>
+                    </div>
                 </div>
-                <p class="team-name teko text-lg sm:text-xl md:text-2xl font-bold text-center pt-3 w-full">
-                    Gully Dhurandhar
-                </p>
             </div>
 
             <!-- Team Card: Royal Warriors -->
-            <div class="glass-card rounded-2xl p-4 sm:p-6 flex flex-col items-center group cursor-default">
-                <div class="team-logo-wrap aspect-square w-full flex items-center justify-center mb-4 p-2 rounded-xl">
-                    <img src="./Assets/TeamLogo/royalwarriors.png" alt="Royal Warriors"
-                        class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500">
+            <div class="flip-wrapper" style="aspect-ratio:3/4;" onclick="this.classList.toggle('flipped')">
+                <div class="flip-inner">
+                    <div class="flip-front">
+                        <img src="./Assets/TeamLogo/royalwarriors.png" alt="Royal Warriors" class="team-logo-img">
+                        <p class="team-name-label">Royal Warriors</p>
+                        <span class="flip-hint">Tap to meet captain</span>
+                    </div>
+                    <div class="flip-back">
+                        <img src="./Assets/Captains/pratyay_royalwarriors.jpg" alt="Pratyay" class="captain-photo">
+                        <p class="captain-label">Captain</p>
+                        <p class="captain-name">Pratyay</p>
+                        <span class="tap-hint">Tap to go back</span>
+                    </div>
                 </div>
-                <p class="team-name teko text-lg sm:text-xl md:text-2xl font-bold text-center pt-3 w-full">
-                    Royal Warriors
-                </p>
             </div>
 
             <!-- Team Card: Spartans -->
-            <div class="glass-card rounded-2xl p-4 sm:p-6 flex flex-col items-center group cursor-default">
-                <div class="team-logo-wrap aspect-square w-full flex items-center justify-center mb-4 p-2 rounded-xl">
-                    <img src="./Assets/TeamLogo/spartans.png" alt="Spartans"
-                        class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500">
+            <div class="flip-wrapper" style="aspect-ratio:3/4;" onclick="this.classList.toggle('flipped')">
+                <div class="flip-inner">
+                    <div class="flip-front">
+                        <img src="./Assets/TeamLogo/spartans.png" alt="Spartans" class="team-logo-img">
+                        <p class="team-name-label">Spartans</p>
+                        <span class="flip-hint">Tap to meet captain</span>
+                    </div>
+                    <div class="flip-back">
+                        <img src="./Assets/Captains/jayesh_spartans.jpg" alt="Jayesh" class="captain-photo">
+                        <p class="captain-label">Captain</p>
+                        <p class="captain-name">Jayesh</p>
+                        <span class="tap-hint">Tap to go back</span>
+                    </div>
                 </div>
-                <p class="team-name teko text-lg sm:text-xl md:text-2xl font-bold text-center pt-3 w-full">
-                    Spartans
-                </p>
             </div>
 
             <!-- Team Card: Titans -->
-            <div class="glass-card rounded-2xl p-4 sm:p-6 flex flex-col items-center group cursor-default">
-                <div class="team-logo-wrap aspect-square w-full flex items-center justify-center mb-4 p-2 rounded-xl">
-                    <img src="./Assets/TeamLogo/titans.png" alt="Titans"
-                        class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500">
+            <div class="flip-wrapper" style="aspect-ratio:3/4;" onclick="this.classList.toggle('flipped')">
+                <div class="flip-inner">
+                    <div class="flip-front">
+                        <img src="./Assets/TeamLogo/titans.png" alt="Titans" class="team-logo-img">
+                        <p class="team-name-label">Titans</p>
+                        <span class="flip-hint">Tap to meet captain</span>
+                    </div>
+                    <div class="flip-back">
+                        <img src="./Assets/Captains/pratham_titans.jpg" alt="Pratham" class="captain-photo">
+                        <p class="captain-label">Captain</p>
+                        <p class="captain-name">Pratham</p>
+                        <span class="tap-hint">Tap to go back</span>
+                    </div>
                 </div>
-                <p class="team-name teko text-lg sm:text-xl md:text-2xl font-bold text-center pt-3 w-full">
-                    Titans
-                </p>
             </div>
 
         </div>
