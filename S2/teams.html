@@ -171,6 +171,104 @@
                 transform: scale(1.05);
             }
         }
+
+        /* ── Squad Roster Section ── */
+        .squad-section-title {
+            font-family: 'Teko', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .squad-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .squad-card:hover {
+            border-color: rgba(225, 29, 72, 0.4);
+            box-shadow: 0 0 30px rgba(225, 29, 72, 0.1);
+        }
+
+        .squad-card-header {
+            background: linear-gradient(135deg, rgba(225, 29, 72, 0.2) 0%, rgba(225, 29, 72, 0.05) 100%);
+            border-bottom: 1px solid rgba(225, 29, 72, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.85rem 1.1rem;
+        }
+
+        .squad-team-logo {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .squad-team-name {
+            font-family: 'Teko', sans-serif;
+            font-size: 1.35rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #ffffff;
+            line-height: 1;
+        }
+
+        .squad-player-list {
+            list-style: none;
+            margin: 0;
+            padding: 0.5rem 0;
+        }
+
+        .squad-player-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.45rem 1.1rem;
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.75);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .squad-player-list li:last-child {
+            border-bottom: none;
+        }
+
+        .squad-player-list li:hover {
+            background: rgba(255, 255, 255, 0.04);
+            color: #ffffff;
+        }
+
+        .squad-player-list li.captain {
+            color: #f9a8d4;
+            font-weight: 600;
+        }
+
+        .player-num {
+            font-family: 'Teko', sans-serif;
+            font-size: 0.9rem;
+            color: rgba(225, 29, 72, 0.6);
+            min-width: 1.4rem;
+            text-align: right;
+        }
+
+        .captain-badge {
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            color: #e11d48;
+            background: rgba(225, 29, 72, 0.12);
+            border: 1px solid rgba(225, 29, 72, 0.3);
+            border-radius: 4px;
+            padding: 1px 5px;
+            text-transform: uppercase;
+            margin-left: auto;
+            white-space: nowrap;
+        }
     </style>
 </head>
 
@@ -379,6 +477,115 @@
                         <span class="tap-hint">Tap to go back</span>
                     </div>
                 </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Squad Roster Section -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 pb-20">
+        <div class="text-center mb-10">
+            <h2 class="teko text-4xl sm:text-5xl md:text-6xl font-bold text-glow text-rose-600 leading-none">
+                Squad Rosters
+            </h2>
+            <p class="text-slate-400 text-sm mt-3 tracking-widest uppercase font-light">All Players · Season 02</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+
+            <!-- Gully Dhurandhar -->
+            <div class="squad-card">
+                <div class="squad-card-header">
+                    <img src="./Assets/TeamLogo/gullydhurandhar.png" alt="Gully Dhurandhar" class="squad-team-logo">
+                    <span class="squad-team-name">Gully Dhurandhar</span>
+                </div>
+                <ul class="squad-player-list">
+                    <li class="captain"><span class="player-num">1</span> Vishwarat <span class="captain-badge">C</span>
+                    </li>
+                    <li><span class="player-num">2</span> Rishab Luthra</li>
+                    <li><span class="player-num">3</span> Sachin Supe</li>
+                    <li><span class="player-num">4</span> Soumya Sethi</li>
+                    <li><span class="player-num">5</span> Shubham Patil</li>
+                    <li><span class="player-num">6</span> Ashit</li>
+                    <li><span class="player-num">7</span> Ganesh Bodke</li>
+                    <li><span class="player-num">8</span> Harshal Wali</li>
+                </ul>
+            </div>
+
+            <!-- Royal Warriors -->
+            <div class="squad-card">
+                <div class="squad-card-header">
+                    <img src="./Assets/TeamLogo/royalwarriors.png" alt="Royal Warriors" class="squad-team-logo">
+                    <span class="squad-team-name">Royal Warriors</span>
+                </div>
+                <ul class="squad-player-list">
+                    <li class="captain"><span class="player-num">1</span> Pratyay Singh <span
+                            class="captain-badge">C</span></li>
+                    <li><span class="player-num">2</span> Piyush Thulkar</li>
+                    <li><span class="player-num">3</span> Himanshu Girase</li>
+                    <li><span class="player-num">4</span> Ishan Gupta</li>
+                    <li><span class="player-num">5</span> Akshay Chouksey</li>
+                    <li><span class="player-num">6</span> Sameer Patel</li>
+                    <li><span class="player-num">7</span> Pawan</li>
+                    <li><span class="player-num">8</span> Darshan Solanki</li>
+                </ul>
+            </div>
+
+            <!-- Gladiator Kings -->
+            <div class="squad-card">
+                <div class="squad-card-header">
+                    <img src="./Assets/TeamLogo/gladiatorkings.png" alt="Gladiator Kings" class="squad-team-logo">
+                    <span class="squad-team-name">Gladiator Kings</span>
+                </div>
+                <ul class="squad-player-list">
+                    <li class="captain"><span class="player-num">1</span> Abhinav Tyagi <span
+                            class="captain-badge">C</span></li>
+                    <li><span class="player-num">2</span> Kartik Joshi</li>
+                    <li><span class="player-num">3</span> Ansuman Kundu</li>
+                    <li><span class="player-num">4</span> Aniket Dighe</li>
+                    <li><span class="player-num">5</span> Hemant Pakewar</li>
+                    <li><span class="player-num">6</span> Rahul Maniyar</li>
+                    <li><span class="player-num">7</span> Akash Pawar</li>
+                    <li><span class="player-num">8</span> Vikram Anand</li>
+                </ul>
+            </div>
+
+            <!-- Titans -->
+            <div class="squad-card">
+                <div class="squad-card-header">
+                    <img src="./Assets/TeamLogo/titans.png" alt="Titans" class="squad-team-logo">
+                    <span class="squad-team-name">Titans</span>
+                </div>
+                <ul class="squad-player-list">
+                    <li class="captain"><span class="player-num">1</span> Pratham<span class="captain-badge">C</span>
+                    </li>
+                    <li><span class="player-num">2</span> Ritik Gupta</li>
+                    <li><span class="player-num">3</span> Omkar Shinde</li>
+                    <li><span class="player-num">4</span> Hari Narayanan</li>
+                    <li><span class="player-num">5</span> Ritik Lodha</li>
+                    <li><span class="player-num">6</span> Adesh Jadhav</li>
+                    <li><span class="player-num">7</span> Vamshi Maloth</li>
+                    <li><span class="player-num">8</span> Abhishek</li>
+                </ul>
+            </div>
+
+            <!-- Spartans -->
+            <div class="squad-card">
+                <div class="squad-card-header">
+                    <img src="./Assets/TeamLogo/spartans.png" alt="Spartans" class="squad-team-logo">
+                    <span class="squad-team-name">Spartans</span>
+                </div>
+                <ul class="squad-player-list">
+                    <li class="captain"><span class="player-num">1</span> Jayesh Jain <span
+                            class="captain-badge">C</span></li>
+                    <li><span class="player-num">2</span> Debadatta</li>
+                    <li><span class="player-num">3</span> Sagar Sargar</li>
+                    <li><span class="player-num">4</span> Yash Mugali</li>
+                    <li><span class="player-num">5</span> Hardik Kaushik</li>
+                    <li><span class="player-num">6</span> Pranav Ladole</li>
+                    <li><span class="player-num">7</span> Prajwal Kahate</li>
+                    <li><span class="player-num">8</span> Ranvijay</li>
+                </ul>
             </div>
 
         </div>
