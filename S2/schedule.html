@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TPL Season 02 | Match Schedule</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Montserrat:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0a0e14;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .teko {
+            font-family: 'Teko', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+        }
+
+        .hero-header {
+            background: radial-gradient(ellipse at 50% 0%, rgba(225, 29, 72, 0.18) 0%, rgba(10, 14, 20, 1) 70%);
+            border-bottom: 1px solid rgba(225, 29, 72, 0.15);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 30px rgba(225, 29, 72, 0.6);
+        }
+
+        .pulse-bg {
+            animation: pulse 4s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+
+        .schedule-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .schedule-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            align-items: center;
+            justify-items: center;
+            text-align: center;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .schedule-card {
+                grid-template-columns: 120px 140px 1fr;
+                padding: 1rem 1.5rem;
+                gap: 1.5rem;
+                justify-items: start;
+                text-align: left;
+            }
+        }
+
+        .schedule-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(225, 29, 72, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .match-type-badge {
+            font-family: 'Teko', sans-serif;
+            padding: 4px 12px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            display: inline-flex;
+            justify-content: center;
+            width: fit-content;
+        }
+
+        .league-badge { background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; }
+        .semi-badge { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: #fbbf24; }
+        .final-badge { background: rgba(225, 29, 72, 0.15); border: 1px solid rgba(225, 29, 72, 0.3); color: #fb7185; }
+        .break-badge { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15); color: #94a3b8; }
+
+        .time-slot {
+            font-family: 'Teko', sans-serif;
+            font-size: 1.4rem;
+            color: #e11d48;
+            font-weight: 600;
+        }
+
+        .matchup {
+            font-family: 'Teko', sans-serif;
+            font-size: clamp(1.4rem, 4vw, 1.8rem);
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        .vs-text {
+            color: rgba(225, 29, 72, 0.4);
+            margin: 0 0.5rem;
+            font-size: 0.8em;
+            font-style: italic;
+            text-transform: lowercase;
+        }
+
+        .break-card {
+            background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.1), transparent);
+            border-top: 1px solid rgba(37, 99, 235, 0.2);
+            border-bottom: 1px solid rgba(37, 99, 235, 0.2);
+            padding: 2rem;
+            text-align: center;
+            color: #ffffff;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            box-shadow: inset 0 0 30px rgba(37, 99, 235, 0.1);
+        }
+
+        .break-card .time-badge {
+            background: #2563eb;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            display: inline-block;
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
+        }
+
+        .knockout-header {
+            margin-top: 2rem;
+            padding: 0.75rem;
+            text-align: center;
+            background: rgba(225, 29, 72, 0.05);
+            border-radius: 9999px;
+            color: #e11d48;
+            font-family: 'Teko', sans-serif;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            border: 1px solid rgba(225, 29, 72, 0.1);
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- Navigation Sidebar -->
+    <div id="side-menu"
+        class="fixed inset-y-0 left-0 w-80 bg-slate-900/98 z-[60] -translate-x-full transition-transform duration-300 ease-in-out backdrop-blur-2xl border-r border-white/10 overflow-y-auto">
+        <div class="p-8">
+            <div class="flex items-center justify-end mb-16">
+                <button id="close-side-btn"
+                    class="text-white hover:text-rose-500 transition-all transform hover:rotate-90">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <nav class="flex flex-col gap-6 teko text-3xl">
+                <a href="https://debadattagadanayak.github.io/TPL/index.html"
+                    class="flex items-center gap-3 p-4 rounded-xl hover:bg-white/5 transition-colors group">
+                    <span class="group-hover:translate-x-2 transition-transform">TPL Home</span>
+                </a>
+
+                <!-- Season 01 Dropdown -->
+                <div class="flex flex-col">
+                    <button
+                        class="dropdown-toggle flex items-center justify-between p-4 rounded-xl hover:bg-white/5 transition-colors w-full text-left group">
+                        <span class="group-hover:translate-x-2 transition-transform font-bold">Season 01</span>
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6 transition-transform duration-300 opacity-50" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="dropdown-content hidden flex-col pl-8 mt-2 gap-4 border-l-2 border-white/5 ml-4">
+                        <a href="https://debadattagadanayak.github.io/TPL/S1/season1_home.html"
+                            class="text-slate-400 hover:text-rose-500 text-2xl transition-colors">Home</a>
+                    </div>
+                </div>
+
+                <!-- Season 02 Dropdown -->
+                <div class="flex flex-col border-t border-white/5 pt-6 mt-2">
+                    <button
+                        class="dropdown-toggle flex items-center justify-between p-4 rounded-xl hover:bg-white/5 transition-colors w-full text-left group">
+                        <span class="group-hover:translate-x-2 transition-transform font-bold text-rose-500">Season
+                            02</span>
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6 transition-transform duration-300 text-rose-500 rotate-180" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="dropdown-content flex flex-col pl-8 mt-2 gap-4 border-l-2 border-rose-600/30 ml-4">
+                        <a href="https://debadattagadanayak.github.io/TPL/S2/season2_home.html"
+                            class="text-slate-400 hover:text-rose-500 text-2xl transition-colors">Home</a>
+                        <a href="https://debadattagadanayak.github.io/TPL/S2/rulebook.html"
+                            class="text-slate-400 hover:text-rose-500 text-2xl transition-colors">Rule Book</a>
+                        <a href="https://debadattagadanayak.github.io/TPL/S2/teams.html"
+                            class="text-slate-400 hover:text-rose-500 text-2xl transition-colors">Teams</a>
+                        <a href="https://debadattagadanayak.github.io/TPL/S2/schedule.html"
+                            class="text-rose-500 text-2xl">Match Schedule</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="mt-32 h-[1px] w-full bg-gradient-to-r from-transparent via-rose-600/30 to-transparent"></div>
+            <p class="mt-8 teko text-xl text-slate-500 tracking-widest italic text-center">#RiseToGreatness</p>
+        </div>
+    </div>
+
+    <!-- Backdrop Overlay -->
+    <div id="side-backdrop"
+        class="fixed inset-0 bg-black/60 z-[55] hidden backdrop-blur-sm transition-opacity duration-300"></div>
+
+    <!-- Hamburger Button -->
+    <button id="open-side-btn"
+        class="fixed top-6 left-6 z-50 text-white hover:text-rose-500 transition-all focus:outline-none bg-black/50 p-2.5 rounded-full backdrop-blur-md border border-white/10 shadow-[0_0_20px_rgba(225,29,72,0.2)] hover:scale-110 active:scale-95">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+
+    <!-- Page Header -->
+    <div class="hero-header relative py-14 px-4 flex flex-col items-center text-center overflow-hidden">
+        <!-- Decorative blobs -->
+        <div
+            class="absolute top-0 left-1/4 w-72 h-72 bg-rose-600/15 rounded-full blur-[100px] pulse-bg pointer-events-none">
+        </div>
+        <div
+            class="absolute bottom-0 right-1/4 w-72 h-72 bg-blue-600/10 rounded-full blur-[100px] pulse-bg pointer-events-none">
+        </div>
+
+        <div class="z-10 w-full max-w-4xl text-center">
+            <p class="teko text-base sm:text-lg md:text-xl text-rose-500 font-bold tracking-widest mb-2 opacity-90">
+                Sri Laxmi Narasimha PG &amp; Gajanana PG Presents
+            </p>
+            <h1
+                class="teko text-5xl sm:text-7xl md:text-8xl font-bold leading-none tracking-tighter italic text-glow mb-3">
+                TURFERS<br><span class="text-rose-600">PREMIER LEAGUE</span>
+            </h1>
+            <div class="inline-block mb-6">
+                <div
+                    class="bg-rose-600 text-white py-1 px-8 teko text-xl sm:text-2xl md:text-3xl skew-badge font-bold shadow-[0_8px_30px_rgba(225,29,72,0.4)]"
+                    style="transform: skewX(-12deg);">
+                    SEASON 02
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schedule Section -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-12 pb-20">
+
+        <div class="text-center mb-12">
+            <h2 class="teko text-5xl sm:text-6xl md:text-7xl font-bold text-glow text-rose-600 leading-none">
+                Match Schedule
+            </h2>
+            <p class="text-slate-400 text-sm mt-3 tracking-widest uppercase font-light">11th April 2026 · Forma Sports
+                Avenue</p>
+        </div>
+
+        <div class="schedule-grid">
+            <!-- Row 1 -->
+            <div class="schedule-card teko">
+                <div class="time-slot">4:00 - 4:30</div>
+                <div><span class="match-type-badge league-badge">League</span></div>
+                <div class="matchup">Spartans <span class="vs-text">vs</span> Titans</div>
+            </div>
+            <!-- Row 2 -->
+            <div class="schedule-card teko">
+                <div class="time-slot">4:30 - 5:00</div>
+                <div><span class="match-type-badge league-badge">League</span></div>
+                <div class="matchup">Gladiator Kings <span class="vs-text">vs</span> Royal Warriors</div>
+            </div>
+            <!-- Row 3 -->
+            <div class="schedule-card teko">
+                <div class="time-slot">5:00 - 5:30</div>
+                <div><span class="match-type-badge league-badge">League</span></div>
+                <div class="matchup">Gully Dhurandhar <span class="vs-text">vs</span> Spartans</div>
+            </div>
+            <!-- Row 4 -->
+            <div class="schedule-card teko">
+                <div class="time-slot">5:30 - 6:00</div>
+                <div><span class="match-type-badge league-badge">League</span></div>
+                <div class="matchup">Titans <span class="vs-text">vs</span> Gladiator Kings</div>
+            </div>
+            <!-- Row 5 -->
+            <div class="schedule-card teko">
+                <div class="time-slot">6:00 - 6:30</div>
+                <div><span class="match-type-badge league-badge">League</span></div>
+                <div class="matchup">Royal Warriors <span class="vs-text">vs</span> Gully Dhurandhar</div>
+            </div>
+            <!-- Row 6 -->
+            <div class="schedule-card teko">
+                <div class="time-slot">6:30 - 7:00</div>
+                <div><span class="match-type-badge league-badge">League</span></div>
+                <div class="matchup">Spartans <span class="vs-text">vs</span> Gladiator Kings</div>
+            </div>
+            <!-- Row 7 -->
+            <div class="schedule-card teko">
+                <div class="time-slot">7:00 - 7:30</div>
+                <div><span class="match-type-badge league-badge">League</span></div>
+                <div class="matchup">Titans <span class="vs-text">vs</span> Royal Warriors</div>
+            </div>
+            <!-- Row 8 -->
+            <div class="schedule-card teko">
+                <div class="time-slot">7:30 - 8:00</div>
+                <div><span class="match-type-badge league-badge">League</span></div>
+                <div class="matchup">Gully Dhurandhar <span class="vs-text">vs</span> Gladiator Kings</div>
+            </div>
+
+            <!-- Break -->
+            <div class="break-card">
+                <div class="time-badge">8:00 - 9:00</div>
+                <div class="flex items-center justify-center gap-3">
+                    <span class="opacity-40">🍽️</span>
+                    <span>Dinner & Strategy Session</span>
+                    <span class="opacity-40">🧠</span>
+                </div>
+            </div>
+
+            <!-- Row 9 -->
+            <div class="schedule-card teko">
+                <div class="time-slot">9:00 - 9:30</div>
+                <div><span class="match-type-badge league-badge">League</span></div>
+                <div class="matchup">Spartans <span class="vs-text">vs</span> Royal Warriors</div>
+            </div>
+            <!-- Row 10 -->
+            <div class="schedule-card teko">
+                <div class="time-slot">9:30 - 10:00</div>
+                <div><span class="match-type-badge league-badge">League</span></div>
+                <div class="matchup">Titans <span class="vs-text">vs</span> Gully Dhurandhar</div>
+            </div>
+
+            <!-- Knockout Phase -->
+            <div class="knockout-header teko">Knockout Stage</div>
+
+            <!-- Semi Final -->
+            <div class="schedule-card teko border-l-4 border-l-yellow-500">
+                <div class="time-slot">10:00 - 10:30</div>
+                <div><span class="match-type-badge semi-badge">Semi Final</span></div>
+                <div class="matchup text-yellow-500">Table Topper 2 <span class="vs-text">vs</span> Table Topper 3</div>
+            </div>
+            <!-- Grand Final -->
+            <div class="schedule-card teko border-l-4 border-l-rose-500 scale-[1.02] shadow-[0_0_40px_rgba(225,29,72,0.15)] bg-rose-500/5">
+                <div class="time-slot">10:30 - 11:30</div>
+                <div><span class="match-type-badge final-badge">Grand Final</span></div>
+                <div class="matchup text-rose-500 font-bold uppercase tracking-tight">Table Topper 1 <span class="vs-text">vs</span> Winner of Semi Final</div>
+            </div>
+        </div>
+
+        <div class="mt-12 text-center text-slate-500 teko text-xl italic tracking-widest">
+            * Schedule is subject to change based on actual match duration.
+        </div>
+    </div>
+
+        <div class="mt-8 text-center text-slate-500 teko text-xl italic tracking-widest">
+            * Schedule is subject to change based on actual match duration.
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="w-full text-center py-10 border-t border-white/5">
+        <div class="h-[1px] w-24 bg-rose-600/50 mx-auto mb-4"></div>
+        <p class="teko text-lg sm:text-xl text-slate-600 tracking-widest italic">#TPL2026 #RiseToGreatness</p>
+    </div>
+
+    <script>
+        const openSideBtn = document.getElementById('open-side-btn');
+        const closeSideBtn = document.getElementById('close-side-btn');
+        const sideMenu = document.getElementById('side-menu');
+        const sideBackdrop = document.getElementById('side-backdrop');
+        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+        function toggleSidebar(open) {
+            if (open) {
+                sideMenu.classList.remove('-translate-x-full');
+                sideBackdrop.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            } else {
+                sideMenu.classList.add('-translate-x-full');
+                sideBackdrop.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+
+        openSideBtn.addEventListener('click', () => toggleSidebar(true));
+        closeSideBtn.addEventListener('click', () => toggleSidebar(false));
+        sideBackdrop.addEventListener('click', () => toggleSidebar(false));
+
+        // Dropdown Toggle
+        dropdownToggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const content = toggle.nextElementSibling;
+                const icon = toggle.querySelector('svg');
+                content.classList.toggle('hidden');
+                content.classList.toggle('flex');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+    </script>
+</body>
+
+</html>
