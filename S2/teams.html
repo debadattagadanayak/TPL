@@ -269,6 +269,36 @@
             margin-left: auto;
             white-space: nowrap;
         }
+        .event-info-bar {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 1rem 1.5rem;
+            border-radius: 1rem;
+            margin-top: 1.5rem;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .event-info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.25rem;
+            white-space: nowrap;
+        }
+
+        @media (min-width: 768px) {
+            .event-info-item {
+                font-size: 1.5rem;
+            }
+        }
     </style>
 </head>
 
@@ -388,8 +418,22 @@
             <h2 class="teko text-5xl sm:text-6xl md:text-7xl font-bold text-glow text-rose-600 leading-none">
                 Participating Teams
             </h2>
-            <p class="text-slate-400 text-sm mt-3 tracking-widest uppercase font-light">Season 02 · 5 Teams · 11th April
-                2026</p>
+            <div class="event-info-bar teko">
+                <div class="event-info-item">
+                    <span class="text-2xl">📅</span>
+                    <span>11th April 2026</span>
+                </div>
+                <span class="hidden md:inline text-white/10">|</span>
+                <div class="event-info-item">
+                    <span class="text-2xl">🕒</span>
+                    <span>3:00 PM Onwards</span>
+                </div>
+                <span class="hidden md:inline text-white/10">|</span>
+                <div class="event-info-item">
+                    <span class="text-2xl">📍</span>
+                    <span>Forma Sports Avenue</span>
+                </div>
+            </div>
         </div>
 
         <!-- Team Cards Grid -->

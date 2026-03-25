@@ -45,8 +45,17 @@
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 0.4; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.05); }
+
+            0%,
+            100% {
+                opacity: 0.4;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.7;
+                transform: scale(1.05);
+            }
         }
 
         .schedule-grid {
@@ -99,10 +108,29 @@
             width: fit-content;
         }
 
-        .league-badge { background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; }
-        .semi-badge { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: #fbbf24; }
-        .final-badge { background: rgba(225, 29, 72, 0.15); border: 1px solid rgba(225, 29, 72, 0.3); color: #fb7185; }
-        .break-badge { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15); color: #94a3b8; }
+        .league-badge {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #60a5fa;
+        }
+
+        .semi-badge {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #fbbf24;
+        }
+
+        .final-badge {
+            background: rgba(225, 29, 72, 0.15);
+            border: 1px solid rgba(225, 29, 72, 0.3);
+            color: #fb7185;
+        }
+
+        .break-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #94a3b8;
+        }
 
         .time-slot {
             font-family: 'Teko', sans-serif;
@@ -130,14 +158,99 @@
             background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.1), transparent);
             border-top: 1px solid rgba(37, 99, 235, 0.2);
             border-bottom: 1px solid rgba(37, 99, 235, 0.2);
-            padding: 2rem;
+            padding: 2.5rem 1.5rem;
             text-align: center;
             color: #ffffff;
             font-family: 'Teko', sans-serif;
             font-size: 1.6rem;
             letter-spacing: 2px;
             text-transform: uppercase;
-            box-shadow: inset 0 0 30px rgba(37, 99, 235, 0.1);
+            box-shadow: inset 0 0 50px rgba(37, 99, 235, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cricket-ball-anim {
+            width: 14px;
+            height: 14px;
+            background: #e11d48;
+            border-radius: 50%;
+            position: absolute;
+            top: 20%;
+            left: -20px;
+            box-shadow: 0 0 15px #e11d48, 0 0 30px #e11d48;
+            animation: flying-ball 6s infinite linear;
+            z-index: 10;
+        }
+
+        .cricket-ball-anim::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background: white;
+            transform: translate(-50%, -50%) rotate(45deg);
+            opacity: 0.5;
+        }
+
+        @keyframes flying-ball {
+            0% {
+                left: -20px;
+                top: 20%;
+                transform: rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            45% {
+                top: 80%;
+                transform: rotate(720deg);
+            }
+
+            55% {
+                top: 10%;
+                transform: rotate(1080deg);
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                left: 110%;
+                top: 50%;
+                transform: rotate(1440deg);
+                opacity: 0;
+            }
+        }
+
+        .strategy-dot {
+            position: absolute;
+            background: #2563eb;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: tactical-move 4s infinite ease-in-out;
+        }
+
+        @keyframes tactical-move {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+                opacity: 0.2;
+            }
+
+            50% {
+                transform: translate(40px, -20px);
+                opacity: 0.6;
+            }
         }
 
         .break-card .time-badge {
@@ -148,7 +261,9 @@
             font-size: 1.1rem;
             margin-bottom: 0.75rem;
             display: inline-block;
-            box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.5);
+            position: relative;
+            z-index: 20;
         }
 
         .knockout-header {
@@ -163,6 +278,37 @@
             text-transform: uppercase;
             font-size: 1.1rem;
             border: 1px solid rgba(225, 29, 72, 0.1);
+        }
+
+        .event-info-bar {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 1rem 1.5rem;
+            border-radius: 1rem;
+            margin-top: 1.5rem;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .event-info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.25rem;
+            white-space: nowrap;
+        }
+
+        @media (min-width: 768px) {
+            .event-info-item {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -268,8 +414,7 @@
                 TURFERS<br><span class="text-rose-600">PREMIER LEAGUE</span>
             </h1>
             <div class="inline-block mb-6">
-                <div
-                    class="bg-rose-600 text-white py-1 px-8 teko text-xl sm:text-2xl md:text-3xl skew-badge font-bold shadow-[0_8px_30px_rgba(225,29,72,0.4)]"
+                <div class="bg-rose-600 text-white py-1 px-8 teko text-xl sm:text-2xl md:text-3xl skew-badge font-bold shadow-[0_8px_30px_rgba(225,29,72,0.4)]"
                     style="transform: skewX(-12deg);">
                     SEASON 02
                 </div>
@@ -284,8 +429,22 @@
             <h2 class="teko text-5xl sm:text-6xl md:text-7xl font-bold text-glow text-rose-600 leading-none">
                 Match Schedule
             </h2>
-            <p class="text-slate-400 text-sm mt-3 tracking-widest uppercase font-light">11th April 2026 · Forma Sports
-                Avenue</p>
+            <div class="event-info-bar teko">
+                <div class="event-info-item">
+                    <span class="text-2xl">📅</span>
+                    <span>11th April 2026</span>
+                </div>
+                <span class="hidden md:inline text-white/10">|</span>
+                <div class="event-info-item">
+                    <span class="text-2xl">🕒</span>
+                    <span>3:00 PM Onwards</span>
+                </div>
+                <span class="hidden md:inline text-white/10">|</span>
+                <div class="event-info-item">
+                    <span class="text-2xl">📍</span>
+                    <span>Forma Sports Avenue</span>
+                </div>
+            </div>
         </div>
 
         <div class="schedule-grid">
@@ -340,11 +499,20 @@
 
             <!-- Break -->
             <div class="break-card">
+                <!-- Animated Ball -->
+                <div class="cricket-ball-anim"></div>
+
+                <!-- Strategy Dots -->
+                <div class="strategy-dot" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+                <div class="strategy-dot" style="top: 70%; left: 15%; animation-delay: 1s;"></div>
+                <div class="strategy-dot" style="top: 30%; left: 80%; animation-delay: 2s;"></div>
+                <div class="strategy-dot" style="top: 60%; left: 85%; animation-delay: 1.5s;"></div>
+
                 <div class="time-badge">8:00 - 9:00</div>
-                <div class="flex items-center justify-center gap-3">
-                    <span class="opacity-40">🍽️</span>
-                    <span>Dinner & Strategy Session</span>
-                    <span class="opacity-40">🧠</span>
+                <div class="flex items-center justify-center gap-3 relative z-20">
+                    <span class="opacity-40 hover:scale-125 transition-transform duration-300">🍽️</span>
+                    <span class="text-glow">Dinner & Strategy Session</span>
+                    <span class="opacity-40 hover:scale-125 transition-transform duration-300">🧠</span>
                 </div>
             </div>
 
@@ -371,10 +539,12 @@
                 <div class="matchup text-yellow-500">Table Topper 2 <span class="vs-text">vs</span> Table Topper 3</div>
             </div>
             <!-- Grand Final -->
-            <div class="schedule-card teko border-l-4 border-l-rose-500 scale-[1.02] shadow-[0_0_40px_rgba(225,29,72,0.15)] bg-rose-500/5">
+            <div
+                class="schedule-card teko border-l-4 border-l-rose-500 scale-[1.02] shadow-[0_0_40px_rgba(225,29,72,0.15)] bg-rose-500/5">
                 <div class="time-slot">10:30 - 11:30</div>
                 <div><span class="match-type-badge final-badge">Grand Final</span></div>
-                <div class="matchup text-rose-500 font-bold uppercase tracking-tight">Table Topper 1 <span class="vs-text">vs</span> Winner of Semi Final</div>
+                <div class="matchup text-rose-500 font-bold uppercase tracking-tight">Table Topper 1 <span
+                        class="vs-text">vs</span> Winner of Semi Final</div>
             </div>
         </div>
 
@@ -383,9 +553,9 @@
         </div>
     </div>
 
-        <div class="mt-8 text-center text-slate-500 teko text-xl italic tracking-widest">
-            * Schedule is subject to change based on actual match duration.
-        </div>
+    <div class="mt-8 text-center text-slate-500 teko text-xl italic tracking-widest">
+        * Schedule is subject to change based on actual match duration.
+    </div>
     </div>
 
     <!-- Footer -->
