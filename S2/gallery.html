@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TPL Season 02 | Gallery</title>
+    <meta name="description" content="Turfers Premier League Season 2 Gallery — relive every match-day and prize ceremony moment in photos.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0a0e14;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .teko {
+            font-family: 'Teko', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 30px rgba(225, 29, 72, 0.6);
+        }
+
+        .pulse-bg {
+            animation: pulse 4s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50%       { opacity: 0.7; transform: scale(1.05); }
+        }
+
+        /* ── Hero bar ── */
+        .hero-bar {
+            background: linear-gradient(180deg, rgba(225, 29, 72, 0.12) 0%, transparent 100%);
+        }
+
+        /* ─────────────────────────────────────────────
+           MASONRY GALLERY
+        ───────────────────────────────────────────── */
+        .masonry-grid {
+            columns: 1;
+            column-gap: 1rem;
+        }
+        @media (min-width: 480px)  { .masonry-grid { columns: 2; } }
+        @media (min-width: 900px)  { .masonry-grid { columns: 3; } }
+        @media (min-width: 1280px) { .masonry-grid { columns: 4; } }
+
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1rem;
+            position: relative;
+            border-radius: 0.875rem;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            background: #0d1117;
+            transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .masonry-item:hover {
+            transform: translateY(-5px) scale(1.015);
+            border-color: rgba(225, 29, 72, 0.5);
+            box-shadow: 0 20px 60px rgba(225, 29, 72, 0.18), 0 0 0 1px rgba(225, 29, 72, 0.12);
+        }
+
+        .masonry-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.55s ease;
+        }
+
+        .masonry-item:hover img {
+            transform: scale(1.04);
+        }
+
+        /* Hover overlay */
+        .masonry-item .m-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(10,14,20,0.8) 0%, transparent 55%);
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 1.1rem;
+        }
+
+        .masonry-item:hover .m-overlay {
+            opacity: 1;
+        }
+
+        .m-zoom-btn {
+            background: rgba(225, 29, 72, 0.85);
+            border-radius: 50%;
+            width: 2.75rem;
+            height: 2.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translateY(10px);
+            transition: transform 0.35s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .masonry-item:hover .m-zoom-btn {
+            transform: translateY(0);
+        }
+
+        /* Photo number badge */
+        .m-badge {
+            position: absolute;
+            top: 0.6rem;
+            left: 0.6rem;
+            background: rgba(225, 29, 72, 0.8);
+            border-radius: 0.35rem;
+            padding: 0.05rem 0.55rem;
+            font-family: 'Teko', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            color: white;
+            backdrop-filter: blur(4px);
+            z-index: 2;
+        }
+
+        /* ── Strip of photo count ── */
+        .strip {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(15px);
+            border-radius: 9999px;
+            padding: 0.55rem 1.75rem;
+        }
+
+        /* ─────────────────────────────────────────────
+           LIGHTBOX
+        ───────────────────────────────────────────── */
+        #lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 7, 12, 0.97);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(14px);
+        }
+
+        #lightbox.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        #lightbox img {
+            max-width: 90vw;
+            max-height: 88vh;
+            border-radius: 0.75rem;
+            object-fit: contain;
+            box-shadow: 0 30px 100px rgba(0,0,0,0.85), 0 0 0 1px rgba(225,29,72,0.12);
+            transform: scale(0.92);
+            transition: transform 0.3s ease;
+        }
+
+        #lightbox.active img {
+            transform: scale(1);
+        }
+
+        #lb-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 50%;
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            color: white;
+        }
+        #lb-close:hover { background: rgba(225,29,72,0.5); transform: rotate(90deg); }
+
+        #lb-prev, #lb-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            color: white;
+        }
+        #lb-prev { left: 1.25rem; }
+        #lb-next { right: 1.25rem; }
+        #lb-prev:hover { background: rgba(225,29,72,0.4); transform: translateY(-50%) scale(1.1); }
+        #lb-next:hover { background: rgba(225,29,72,0.4); transform: translateY(-50%) scale(1.1); }
+
+        #lb-counter {
+            position: absolute;
+            bottom: 1.25rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 9999px;
+            padding: 0.35rem 1.1rem;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.05rem;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.55);
+        }
+
+        /* Dot strip */
+        #lb-dots {
+            position: absolute;
+            bottom: 3.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 80vw;
+        }
+
+        .lb-dot {
+            width: 0.45rem;
+            height: 0.45rem;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            transition: background 0.2s, transform 0.2s;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .lb-dot.active {
+            background: #e11d48;
+            transform: scale(1.4);
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- Navigation Sidebar -->
+    <div id="side-menu"
+        class="fixed inset-y-0 left-0 w-80 bg-slate-900/98 z-[60] -translate-x-full transition-transform duration-300 ease-in-out backdrop-blur-2xl border-r border-white/10 overflow-y-auto">
+        <div class="p-8">
+            <div class="flex items-center justify-end mb-16">
+                <button id="close-side-btn"
+                    class="text-white hover:text-rose-500 transition-all transform hover:rotate-90">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <nav class="flex flex-col gap-6 teko text-3xl">
+                <a href="https://debadattagadanayak.github.io/TPL/index.html"
+                    class="flex items-center gap-3 p-4 rounded-xl hover:bg-white/5 transition-colors group">
+                    <span class="group-hover:translate-x-2 transition-transform">TPL Home</span>
+                </a>
+
+                <!-- Season 01 Dropdown -->
+                <div class="flex flex-col">
+                    <button
+                        class="dropdown-toggle flex items-center justify-between p-4 rounded-xl hover:bg-white/5 transition-colors w-full text-left group">
+                        <span class="group-hover:translate-x-2 transition-transform font-bold">Season 01</span>
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6 transition-transform duration-300 opacity-50" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="dropdown-content hidden flex-col pl-8 mt-2 gap-4 border-l-2 border-white/5 ml-4">
+                        <a href="https://debadattagadanayak.github.io/TPL/S1/season1_home.html"
+                            class="text-slate-400 hover:text-rose-500 text-2xl transition-colors">Home</a>
+                    </div>
+                </div>
+
+                <!-- Season 02 Dropdown -->
+                <div class="flex flex-col border-t border-white/5 pt-6 mt-2">
+                    <button
+                        class="dropdown-toggle flex items-center justify-between p-4 rounded-xl hover:bg-white/5 transition-colors w-full text-left group">
+                        <span class="group-hover:translate-x-2 transition-transform font-bold text-rose-500">Season
+                            02</span>
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6 transition-transform duration-300 text-rose-500 rotate-180" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="dropdown-content flex flex-col pl-8 mt-2 gap-4 border-l-2 border-rose-600/30 ml-4">
+                        <a href="https://debadattagadanayak.github.io/TPL/S2/season2_home.html"
+                            class="text-slate-400 hover:text-rose-500 text-2xl transition-colors">Home</a>
+                        <a href="https://debadattagadanayak.github.io/TPL/S2/rulebook.html"
+                            class="text-slate-400 hover:text-rose-500 text-2xl transition-colors">Rule Book</a>
+                        <a href="https://debadattagadanayak.github.io/TPL/S2/teams.html"
+                            class="text-slate-400 hover:text-rose-500 text-2xl transition-colors">Teams</a>
+                        <a href="https://debadattagadanayak.github.io/TPL/S2/schedule.html"
+                            class="text-slate-400 hover:text-rose-500 text-2xl transition-colors">Match Schedule</a>
+                        <a href="https://debadattagadanayak.github.io/TPL/S2/gallery.html"
+                            class="text-rose-500 text-2xl">Gallery</a>
+                        <a href="https://debadattagadanayak.github.io/TPL/S2/prize_ceremony.html"
+                            class="text-slate-400 hover:text-rose-500 text-2xl transition-colors">Prize Ceremony</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="mt-32 h-[1px] w-full bg-gradient-to-r from-transparent via-rose-600/30 to-transparent"></div>
+            <p class="mt-8 teko text-xl text-slate-500 tracking-widest italic text-center">#RiseToGreatness</p>
+        </div>
+    </div>
+
+    <!-- Backdrop -->
+    <div id="side-backdrop"
+        class="fixed inset-0 bg-black/60 z-[55] hidden backdrop-blur-sm transition-opacity duration-300"></div>
+
+    <!-- Hamburger -->
+    <button id="open-side-btn"
+        class="fixed top-6 left-6 z-50 text-white hover:text-rose-500 transition-all focus:outline-none bg-black/50 p-2.5 rounded-full backdrop-blur-md border border-white/10 shadow-[0_0_20px_rgba(225,29,72,0.2)] hover:scale-110 active:scale-95">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+
+    <!-- ── HERO HEADER ── -->
+    <div class="relative hero-bar pt-28 pb-16 px-4 text-center overflow-hidden">
+        <!-- Ambient blobs -->
+        <div class="absolute top-0 left-1/3 w-96 h-96 bg-rose-600/15 rounded-full blur-[140px] pulse-bg pointer-events-none"></div>
+        <div class="absolute top-0 right-1/4 w-64 h-64 bg-blue-600/10 rounded-full blur-[120px] pulse-bg pointer-events-none"></div>
+
+        <!-- Icon -->
+        <div class="relative z-10 flex justify-center mb-6">
+            <div class="bg-rose-600/15 border border-rose-600/25 rounded-full p-5 inline-flex">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
+                </svg>
+            </div>
+        </div>
+
+        <div class="relative z-10">
+            <p class="teko text-rose-500 text-lg md:text-xl tracking-[0.35em] mb-3 opacity-80">TPL SEASON 02</p>
+            <h1 class="teko text-6xl sm:text-8xl md:text-[9rem] font-bold leading-[0.85] tracking-tighter italic text-glow mb-4">
+                MATCH<br><span class="text-rose-600">GALLERY</span>
+            </h1>
+            <p class="text-slate-400 text-sm md:text-base tracking-[0.3em] uppercase font-light mt-6">
+                11th April 2026 &nbsp;•&nbsp; Forma Sports Avenue
+            </p>
+        </div>
+
+        <!-- Decorative line -->
+        <div class="relative z-10 mt-10 flex items-center justify-center gap-4 max-w-xs mx-auto">
+            <div class="flex-1 h-px bg-gradient-to-r from-transparent to-rose-600/50"></div>
+            <div class="w-2 h-2 bg-rose-600 rounded-full"></div>
+            <div class="flex-1 h-px bg-gradient-to-l from-transparent to-rose-600/50"></div>
+        </div>
+    </div>
+
+    <!-- ── PHOTO COUNT STRIP ── -->
+    <div class="flex justify-center px-4 mb-10">
+        <div class="strip">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+            </svg>
+            <span class="teko text-xl text-slate-300 tracking-widest">18 PHOTOS</span>
+        </div>
+    </div>
+
+    <!-- ── MASONRY GALLERY ── -->
+    <main class="px-4 pb-24 max-w-screen-2xl mx-auto">
+        <div class="masonry-grid" id="gallery-grid">
+
+            <div class="masonry-item" data-index="0" onclick="openLightbox(0)">
+                <img src="./Assets/Photos/Match Day/PXL_20260411_184847984.jpg" alt="Match Day Photo 1" loading="lazy">
+                <div class="m-badge">01</div>
+                <div class="m-overlay"><div class="m-zoom-btn"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6"/></svg></div></div>
+            </div>
+
+            <div class="masonry-item" data-index="1" onclick="openLightbox(1)">
+                <img src="./Assets/Photos/Match Day/PXL_20260411_185015491.TS-000.jpg" alt="Match Day Photo 2" loading="lazy">
+                <div class="m-badge">02</div>
+                <div class="m-overlay"><div class="m-zoom-btn"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6"/></svg></div></div>
+            </div>
+
+            <div class="masonry-item" data-index="2" onclick="openLightbox(2)">
+                <img src="./Assets/Photos/Match Day/PXL_20260411_185259436.jpg" alt="Match Day Photo 3" loading="lazy">
+                <div class="m-badge">03</div>
+                <div class="m-overlay"><div class="m-zoom-btn"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6"/></svg></div></div>
+            </div>
+
+            <div class="masonry-item" data-index="3" onclick="openLightbox(3)">
+                <img src="./Assets/Photos/Match Day/PXL_20260411_185434025.PORTRAIT.jpg" alt="Match Day Photo 4" loading="lazy">
+                <div class="m-badge">04</div>
+                <div class="m-overlay"><div class="m-zoom-btn"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6"/></svg></div></div>
+            </div>
+
+            <div class="masonry-item" data-index="4" onclick="openLightbox(4)">
+                <img src="./Assets/Photos/Match Day/PXL_20260411_185448234.jpg" alt="Match Day Photo 5" loading="lazy">
+                <div class="m-badge">05</div>
+                <div class="m-overlay"><div class="m-zoom-btn"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6"/></svg></div></div>
+            </div>
+
+            <div class="masonry-item" data-index="5" onclick="openLightbox(5)">
+                <img src="./Assets/Photos/Match Day/PXL_20260411_185658498.TS-000.jpg" alt="Match Day Photo 6" loading="lazy">
+                <div class="m-badge">06</div>
+                <div class="m-overlay"><div class="m-zoom-btn"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6"/></svg></div></div>
+            </div>
+
+            <div class="masonry-item" data-index="6" onclick="openLightbox(6)">
+                <img src="./Assets/Photos/Match Day/PXL_20260411_185739691.TS-000.jpg" alt="Match Day Photo 7" loading="lazy">
+                <div class="m-badge">07</div>
+                <div class="m-overlay"><div class="m-zoom-btn"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6"/></svg></div></div>
+            </div>
+
+            <div class="masonry-item" data-index="7" onclick="openLightbox(7)">
+                <img src="./Assets/Photos/Match Day/PXL_20260411_185931308.TS-000.jpg" alt="Match Day Photo 8" loading="lazy">
+                <div class="m-badge">08</div>
+                <div class="m-overlay"><div class="m-zoom-btn"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6"/></svg></div></div>
+            </div>
+
+            <div class="masonry-item" data-index="8" onclick="openLightbox(8)">
+                <img src="./Assets/Photos/Match Day/PXL_20260411_190024370.PORTRAIT.jpg" alt="Match Day Photo 9" loading="lazy">
+                <div class="m-badge">09</div>
+                <div class="m-overlay"><div class="m-zoom-btn"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6"/></svg></div></div>
+            </div>
+
+            <div class="masonry-item" data-index="9" onclick="openLightbox(9)">
+                <img src="./Assets/Photos/Match Day/PXL_20260411_190102023.TS-000.jpg" alt="Match Day Photo 10" loading="lazy">
+                <div class="m-badge">10</div>
+                <div class="m-overlay"><div class="m-zoom-btn"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6"/></svg></div></div>
+            </div>
+
+            <div class="masonry-item" data-index="10" onclick="openLightbox(10)">
+                <img src="./Assets/Photos/Match Day/PXL_20260411_190156571.TS-000.jpg" alt="Match Day Photo 11" loading="lazy">
+                <div class="m-badge">11</div>
+                <div class="m-overlay"><div class="m-zoom-btn"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6"/></svg></div></div>
+            </div>
+
+            <div class="masonry-item" data-index="11" onclick="openLightbox(11)">
+                <img src="./Assets/Photos/Match Day/PXL_20260411_190248972.TS-000.jpg" alt="Match Day Photo 12" loading="lazy">
+                <div class="m-badge">12</div>
+                <div class="m-overlay"><div class="m-zoom-btn"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6"/></svg></div></div>
+            </div>
+
+            <div class="masonry-item" data-index="12" onclick="openLightbox(12)">
+                <img src="./Assets/Photos/Match Day/PXL_20260411_190414245.TS-000.jpg" alt="Match Day Photo 13" loading="lazy">
+                <div class="m-badge">13</div>
+                <div class="m-overlay"><div class="m-zoom-btn"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6"/></svg></div></div>
+            </div>
+
+            <div class="masonry-item" data-index="13" onclick="openLightbox(13)">
+                <img src="./Assets/Photos/Match Day/PXL_20260411_190542306.jpg" alt="Match Day Photo 14" loading="lazy">
+                <div class="m-badge">14</div>
+                <div class="m-overlay"><div class="m-zoom-btn"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6"/></svg></div></div>
+            </div>
+
+            <div class="masonry-item" data-index="14" onclick="openLightbox(14)">
+                <img src="./Assets/Photos/Match Day/PXL_20260411_190600001.TS-000.jpg" alt="Match Day Photo 15" loading="lazy">
+                <div class="m-badge">15</div>
+                <div class="m-overlay"><div class="m-zoom-btn"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6"/></svg></div></div>
+            </div>
+
+            <div class="masonry-item" data-index="15" onclick="openLightbox(15)">
+                <img src="./Assets/Photos/Match Day/PXL_20260411_191319204.jpg" alt="Match Day Photo 16" loading="lazy">
+                <div class="m-badge">16</div>
+                <div class="m-overlay"><div class="m-zoom-btn"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6"/></svg></div></div>
+            </div>
+
+            <div class="masonry-item" data-index="16" onclick="openLightbox(16)">
+                <img src="./Assets/Photos/Match Day/PXL_20260411_191433126.TS-002.jpg" alt="Match Day Photo 17" loading="lazy">
+                <div class="m-badge">17</div>
+                <div class="m-overlay"><div class="m-zoom-btn"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6"/></svg></div></div>
+            </div>
+
+            <div class="masonry-item" data-index="17" onclick="openLightbox(17)">
+                <img src="./Assets/Photos/Match Day/PXL_20260411_191739152.PORTRAIT.jpg" alt="Match Day Photo 18" loading="lazy">
+                <div class="m-badge">18</div>
+                <div class="m-overlay"><div class="m-zoom-btn"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6"/></svg></div></div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ── FOOTER ── -->
+    <div class="w-full text-center py-12 border-t border-white/5">
+        <div class="h-[1px] w-24 bg-rose-600/50 mx-auto mb-4"></div>
+        <p class="teko text-xl text-slate-600 tracking-widest italic">#TPL2026 #RiseToGreatness</p>
+    </div>
+
+    <!-- ── LIGHTBOX ── -->
+    <div id="lightbox">
+        <button id="lb-close">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+        <button id="lb-prev">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+            </svg>
+        </button>
+        <img id="lb-img" src="" alt="Match Day Photo">
+        <button id="lb-next">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+        </button>
+        <div id="lb-dots"></div>
+        <div id="lb-counter"></div>
+    </div>
+
+    <script>
+        // ── Sidebar ──────────────────────────────────────────────
+        const openSideBtn  = document.getElementById('open-side-btn');
+        const closeSideBtn = document.getElementById('close-side-btn');
+        const sideMenu     = document.getElementById('side-menu');
+        const sideBackdrop = document.getElementById('side-backdrop');
+
+        function toggleSidebar(open) {
+            if (open) {
+                sideMenu.classList.remove('-translate-x-full');
+                sideBackdrop.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            } else {
+                sideMenu.classList.add('-translate-x-full');
+                sideBackdrop.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+
+        openSideBtn.addEventListener('click',  () => toggleSidebar(true));
+        closeSideBtn.addEventListener('click', () => toggleSidebar(false));
+        sideBackdrop.addEventListener('click', () => toggleSidebar(false));
+
+        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const content = toggle.nextElementSibling;
+                const icon    = toggle.querySelector('svg');
+                content.classList.toggle('hidden');
+                content.classList.toggle('flex');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+
+        // ── Lightbox ─────────────────────────────────────────────
+        const photos = [
+            './Assets/Photos/Match Day/PXL_20260411_184847984.jpg',
+            './Assets/Photos/Match Day/PXL_20260411_185015491.TS-000.jpg',
+            './Assets/Photos/Match Day/PXL_20260411_185259436.jpg',
+            './Assets/Photos/Match Day/PXL_20260411_185434025.PORTRAIT.jpg',
+            './Assets/Photos/Match Day/PXL_20260411_185448234.jpg',
+            './Assets/Photos/Match Day/PXL_20260411_185658498.TS-000.jpg',
+            './Assets/Photos/Match Day/PXL_20260411_185739691.TS-000.jpg',
+            './Assets/Photos/Match Day/PXL_20260411_185931308.TS-000.jpg',
+            './Assets/Photos/Match Day/PXL_20260411_190024370.PORTRAIT.jpg',
+            './Assets/Photos/Match Day/PXL_20260411_190102023.TS-000.jpg',
+            './Assets/Photos/Match Day/PXL_20260411_190156571.TS-000.jpg',
+            './Assets/Photos/Match Day/PXL_20260411_190248972.TS-000.jpg',
+            './Assets/Photos/Match Day/PXL_20260411_190414245.TS-000.jpg',
+            './Assets/Photos/Match Day/PXL_20260411_190542306.jpg',
+            './Assets/Photos/Match Day/PXL_20260411_190600001.TS-000.jpg',
+            './Assets/Photos/Match Day/PXL_20260411_191319204.jpg',
+            './Assets/Photos/Match Day/PXL_20260411_191433126.TS-002.jpg',
+            './Assets/Photos/Match Day/PXL_20260411_191739152.PORTRAIT.jpg',
+        ];
+
+        let currentIndex = 0;
+
+        const lightbox  = document.getElementById('lightbox');
+        const lbImg     = document.getElementById('lb-img');
+        const lbCounter = document.getElementById('lb-counter');
+        const lbDots    = document.getElementById('lb-dots');
+        const lbClose   = document.getElementById('lb-close');
+        const lbPrev    = document.getElementById('lb-prev');
+        const lbNext    = document.getElementById('lb-next');
+
+        // Build dots
+        photos.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'lb-dot' + (i === 0 ? ' active' : '');
+            dot.addEventListener('click', () => showPhoto(i));
+            lbDots.appendChild(dot);
+        });
+
+        function showPhoto(index) {
+            currentIndex = (index + photos.length) % photos.length;
+            lbImg.src = photos[currentIndex];
+            lbCounter.textContent = `${currentIndex + 1} / ${photos.length}`;
+            document.querySelectorAll('.lb-dot').forEach((d, i) =>
+                d.classList.toggle('active', i === currentIndex));
+        }
+
+        function openLightbox(index) {
+            showPhoto(index);
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        lbClose.addEventListener('click', closeLightbox);
+        lbPrev.addEventListener('click',  () => showPhoto(currentIndex - 1));
+        lbNext.addEventListener('click',  () => showPhoto(currentIndex + 1));
+        lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+
+        document.addEventListener('keydown', e => {
+            if (!lightbox.classList.contains('active')) return;
+            if (e.key === 'ArrowLeft')  showPhoto(currentIndex - 1);
+            if (e.key === 'ArrowRight') showPhoto(currentIndex + 1);
+            if (e.key === 'Escape')     closeLightbox();
+        });
+
+        // Touch swipe
+        let touchStartX = 0;
+        lightbox.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+        lightbox.addEventListener('touchend',   e => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) diff > 0 ? showPhoto(currentIndex + 1) : showPhoto(currentIndex - 1);
+        });
+    </script>
+</body>
+
+</html>
